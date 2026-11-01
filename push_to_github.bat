@@ -12,7 +12,7 @@ echo.
 echo Make sure you have created an empty repository on GitHub first!
 echo (e.g. https://github.com/prasannatz/CyberShield_IR)
 echo.
-set /p REPO_URL="Enter your GitHub Repository URL: "
+set /p REPO_URL="https://github.com/prasannatz/CyberShield_IR.git "
 
 if "%REPO_URL%"=="" (
     echo [!] No URL provided. Aborted.
@@ -49,3 +49,4 @@ if %ERRORLEVEL% EQU 0 (
 
 echo.
 pause
+
