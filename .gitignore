@@ -1,0 +1,17 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs and databases
+*.log
+incident_audit_trail.log
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment / IDE
+.vscode/
+.idea/
