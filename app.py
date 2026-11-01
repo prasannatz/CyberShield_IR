@@ -1,169 +1,274 @@
 """
 ================================================================================
-  CyberShield IR - Enterprise Incident Response Engine (Corporate IT Edition)
-  Industry Focus : Corporate IT (Active Directory, ERP, M365, Cloud, VPN)
-  Standards      : NIST SP 800-61 Rev.2 | SANS PICERL | ISO/IEC 27001 | SOC 2 | GDPR
-  Course Outcomes: CO2 (Threat Analysis) | CO4 (Containment/Recovery) | CO5 (Forensics)
+  CyberShield IR - Technical Incident Response & DFIR Backend Engine
+  Standards: RFC 3227 (Order of Volatility) | ISO/IEC 27037 (Digital Evidence)
+             NIST SP 800-61 Rev.2 (Incident Handling) | MITRE ATT&CK Mapping
 ================================================================================
 """
 
 import http.server
 import socketserver
 import json
-import hashlib
-import datetime
+import base64
 import os
 import sys
+import urllib.parse
+from typing import Dict, Any
+
+from database import (
+    init_db,
+    utc_now,
+    add_audit_entry,
+    verify_audit_chain,
+    get_audit_trail,
+    save_incident,
+    get_incidents,
+    save_evidence_record,
+    get_evidence_list,
+    log_soar_action,
+    get_soar_actions,
+    get_db_connection
+)
+from detection_engine import (
+    calculate_risk_score,
+    analyze_security_logs,
+    evaluate_detection_benchmark,
+    DETECTION_RULES
+)
 
 PORT = 8080
-LOG_FILE = "incident_audit_trail.log"
-INCIDENTS = []
-EVIDENCE = []
+MAX_UPLOAD_SIZE = 25 * 1024 * 1024  # 25 MB Limit
 
-def utc_now() -> str:
-    return datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-
-def write_audit(action: str, details: str):
-    """Logs tamper-evident audit records into an append-only log file."""
-    timestamp = utc_now()
-    entry = f"[{timestamp} UTC] [{action.upper():18s}] {details}\n"
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write(entry)
-    print(entry.strip())
-
-def calculate_sha256(data: str) -> str:
-    return hashlib.sha256(data.encode("utf-8")).hexdigest()
-
-# ─────────────────────────────────────────────────────────────────────────────
-# CO2: CORPORATE THREAT TRIAGE & RISK SCORING ENGINE
-# ─────────────────────────────────────────────────────────────────────────────
-def score_threat(asset: str, vector: str, cost: int, systems: int) -> dict:
-    """
-    Evaluates incident impact based on Corporate IT asset criticality,
-    attack vector profile, estimated enterprise exposure, and blast radius.
-    """
-    score = 0
-    # Corporate Asset Criticality
-    asset_map = {"critical": 40, "high": 25, "medium": 12, "low": 5}
-    score += asset_map.get(asset, 5)
-
-    # Vector weights in Corporate IT
-    vector_map = {"ransomware": 35, "bec": 30, "vpn": 28, "ddos": 18, "insider": 15}
-    score += vector_map.get(vector, 10)
-
-    # Financial / Business exposure
-    if cost > 1_000_000:
-        score += 20
-    elif cost > 500_000:
-        score += 14
-    elif cost > 100_000:
-        score += 8
-    else:
-        score += 2
-
-    # Systems blast radius
-    score += min(systems * 2, 10)
-
-    # Severity classification
-    if score >= 80:
-        return {"level": "SEV-1 CRITICAL", "sla": "< 15 minutes", "score": score}
-    elif score >= 55:
-        return {"level": "SEV-2 HIGH", "sla": "< 30 minutes", "score": score}
-    elif score >= 30:
-        return {"level": "SEV-3 MEDIUM", "sla": "< 2 hours", "score": score}
-    else:
-        return {"level": "SEV-4 LOW", "sla": "< 8 hours", "score": score}
-
-# ─────────────────────────────────────────────────────────────────────────────
-# CO4: CORPORATE CONTAINMENT & REMEDIATION PLAYBOOKS
-# ─────────────────────────────────────────────────────────────────────────────
-PLAYBOOKS = {
+# Structured SOAR Playbook Definitions with Simulated vs Real Action Typing & Sensitivity
+STRUCTURED_PLAYBOOKS = {
     "ransomware": [
-        "Corporate VLAN 10 Network Quarantine applied — switch ACLs isolate target host while preserving RAM.",
-        "KRBTGT dual-reset sequence executed across Active Directory domain controllers to revoke Kerberos tickets.",
-        "Volatile memory dump acquired via WinPmem to write-protected forensic storage.",
-        "Immutable enterprise backup snapshot validated at pre-incident cut-off point (RPO: 0 loss).",
-        "Clean Hardened Gold Master OS provisioned & ERP database transaction journals replayed."
+        {
+            "step_id": "RW-01",
+            "name": "Network Switch VLAN 10 Isolation",
+            "type": "SIMULATED_INTEGRATION",
+            "target": "Cisco Nexus 9300 Core Switch",
+            "command": "conf t ; interface vlan 10 ; ip access-group ACL-IR-QUARANTINE in ; end",
+            "sensitive": True,
+            "rationale": "Quarantines target subnet to halt lateral spread while keeping host powered to preserve volatile RAM per RFC 3227.",
+            "output": "VLAN 10 ACL-IR-QUARANTINE bound successfully. Inbound/Outbound user traffic dropped; forensic management port 22 preserved.",
+            "exit_code": 0
+        },
+        {
+            "step_id": "RW-02",
+            "name": "Active Directory KRBTGT Dual-Reset",
+            "type": "SIMULATED_INTEGRATION",
+            "target": "CORP-DC01.corp.enterprise.local",
+            "command": "Reset-KrbTgtAccountPassword.ps1 -Mode TwoCycle -Confirm:$false",
+            "sensitive": True,
+            "rationale": "Invalidates all forged Golden Tickets across Kerberos Key Distribution Center (KDC).",
+            "output": "KRBTGT generation key cycle 1 completed. Second cycle scheduled (10h replication delay). Golden Tickets revoked.",
+            "exit_code": 0
+        },
+        {
+            "step_id": "RW-03",
+            "name": "Volatile Memory Bitstream Acquisition",
+            "type": "REAL_LOCAL_INTEGRATION",
+            "target": "Target Host Physical RAM",
+            "command": "winpmem_mini_x64.exe -o mem_dump.raw --volume_mode 1",
+            "sensitive": False,
+            "rationale": "Captures live encryption keys and injected DLLs prior to reboot under RFC 3227 Step 1.",
+            "output": "Physical RAM image stream completed (16,384 MB). Output written to write-blocker attached vault. SHA-256 seal initialized.",
+            "exit_code": 0
+        },
+        {
+            "step_id": "RW-04",
+            "name": "Immutable Backup Snapshot Verification",
+            "type": "SIMULATED_INTEGRATION",
+            "target": "Enterprise WORM Storage Repository",
+            "command": "aws s3api get-object-legal-hold --bucket corp-immutable-backups --key 2026-10-31-snapshot.vhdx",
+            "sensitive": False,
+            "rationale": "Verifies that pre-attack snapshots are intact and protected by write-once-read-many (WORM) policies.",
+            "output": "Legal hold: ON. ObjectLock retention: 365 Days. Zero malware modification detected in backup stream (RPO: 0).",
+            "exit_code": 0
+        }
     ],
     "bec": [
-        "M365 OAuth refresh tokens revoked & global session sign-out enforced for targeted executive account.",
-        "Hidden inbox forwarding rules routing emails to external drop inboxes identified and purged.",
-        "Azure Active Directory Conditional Access policy updated to mandate FIDO2 hardware MFA tokens.",
-        "Corporate security disclosure dispatched to CISO, Legal Counsel, and Corporate Board."
+        {
+            "step_id": "BEC-01",
+            "name": "M365 OAuth Token Revocation & Global Sign-Out",
+            "type": "SIMULATED_INTEGRATION",
+            "target": "Microsoft Entra ID (Azure AD)",
+            "command": "Revoke-AzureADUserAllRefreshToken -ObjectId cfo@enterprise.local",
+            "sensitive": True,
+            "rationale": "Immediately terminates adversary session cookie and token replay on hijacked executive account.",
+            "output": "HTTP 200 OK: All user refresh tokens and active browser sessions terminated worldwide.",
+            "exit_code": 0
+        },
+        {
+            "step_id": "BEC-02",
+            "name": "Purge Hidden Inbox Forwarding Rules",
+            "type": "SIMULATED_INTEGRATION",
+            "target": "Exchange Online",
+            "command": "Get-InboxRule -Mailbox cfo@enterprise.local | Where-Object {$_.ForwardTo} | Remove-InboxRule -Confirm:$false",
+            "sensitive": False,
+            "rationale": "Disables attacker surveillance rule forwarding incoming financial communications to external drop inboxes.",
+            "output": "Rule 'AutoForward_External_Wire' deleted from CFO mailbox.",
+            "exit_code": 0
+        }
     ],
     "vpn": [
-        "Compromised corporate VPN sessions terminated immediately at edge firewall / concentrator.",
-        "Attacker IP addresses and anomalous geo-locations added to perimeter firewall drop lists.",
-        "Internal Active Directory service accounts rotated and audited for unauthorized privilege escalation.",
-        "Remote access gateway access logs extracted for lateral movement timeline analysis."
+        {
+            "step_id": "VPN-01",
+            "name": "Sever Compromised Remote VPN Sessions",
+            "type": "SIMULATED_INTEGRATION",
+            "target": "Palo Alto GlobalProtect Concentrator",
+            "command": "request global-protect-gateway user-logout gateway-name GP-GW-01 user compromised_user",
+            "sensitive": False,
+            "rationale": "Terminates rogue tunnel connection and invalidates perimeter credentials.",
+            "output": "Tunnel terminated. Client IP 198.51.100.42 dropped from active state table.",
+            "exit_code": 0
+        }
     ],
     "ddos": [
-        "BGP Anycast routing diverted to upstream enterprise cloud DDoS scrubbing center.",
-        "WAF aggressive rate-limiting enforced (5 req/sec threshold on corporate single sign-on / login portals).",
-        "Hostile proxy networks, Tor exit nodes, and attacker ASN blocks dropped at edge boundary."
+        {
+            "step_id": "DOS-01",
+            "name": "BGP Anycast Cloud Scrubbing Diversion",
+            "type": "SIMULATED_INTEGRATION",
+            "target": "Edge Border Routers (AS65001)",
+            "command": "router bgp 65001 ; neighbor 198.51.100.1 route-map SCRUB-DIVERT out",
+            "sensitive": True,
+            "rationale": "Shifts inbound transit traffic to DDoS scrubbing center to absorb volumetric SYN floods.",
+            "output": "BGP route announcement updated. Scrubbing center scrubbing 48.7 Gbps syn-flood traffic. 99.8% drop of malicious packets.",
+            "exit_code": 0
+        }
     ]
 }
 
-# ─────────────────────────────────────────────────────────────────────────────
-# HTTP SERVER & REST API DISPATCHER
-# ─────────────────────────────────────────────────────────────────────────────
-class CyberShieldRequestHandler(http.server.SimpleHTTPRequestHandler):
 
-    def send_json_response(self, data: dict, status: int = 200):
+class CyberShieldHandler(http.server.SimpleHTTPRequestHandler):
+
+    def send_json(self, data: Dict[str, Any], status: int = 200):
         body = json.dumps(data, indent=2).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Analyst-ID")
         self.end_headers()
         self.wfile.write(body)
 
-    def parse_json_payload(self) -> dict:
+    def send_error_json(self, message: str, status: int = 400, code: str = "BAD_REQUEST"):
+        self.send_json({"status": "error", "code": code, "message": message}, status=status)
+
+    def parse_json_body(self) -> Dict[str, Any]:
         content_length = int(self.headers.get("Content-Length", 0))
+        if content_length > MAX_UPLOAD_SIZE:
+            raise ValueError("Payload size exceeds maximum allowed limit (25 MB).")
         raw_body = self.rfile.read(content_length)
-        return json.loads(raw_body.decode("utf-8")) if raw_body else {}
+        if not raw_body:
+            return {}
+        return json.loads(raw_body.decode("utf-8"))
 
     def do_OPTIONS(self):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, X-Analyst-ID")
         self.end_headers()
 
     def do_GET(self):
-        # API: Return all incidents
-        if self.path == "/api/incidents":
-            self.send_json_response({"incidents": INCIDENTS, "count": len(INCIDENTS)})
-        # API: Return all evidence
-        elif self.path == "/api/evidence":
-            self.send_json_response({"evidence": EVIDENCE, "count": len(EVIDENCE)})
-        # API: Return audit trail
-        elif self.path == "/api/audit":
-            try:
-                with open(LOG_FILE, "r", encoding="utf-8") as f:
-                    lines = f.readlines()
-                self.send_json_response({"log": lines[-50:], "total": len(lines)})
-            except FileNotFoundError:
-                self.send_json_response({"log": [], "total": 0})
-        # Default: Serve frontend files (index.html, etc.)
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+
+        # 1. API: List all persistent incidents
+        if path == "/api/incidents":
+            incidents = get_incidents()
+            self.send_json({"status": "success", "incidents": incidents, "count": len(incidents)})
+
+        # 2. API: List all persistent evidence records
+        elif path == "/api/evidence":
+            evidence = get_evidence_list()
+            self.send_json({"status": "success", "evidence": evidence, "count": len(evidence)})
+
+        # 3. API: Cryptographic Audit Chain Records
+        elif path == "/api/audit":
+            records = get_audit_trail(limit=50)
+            self.send_json({"status": "success", "audit_chain": records, "count": len(records)})
+
+        # 4. API: Cryptographic Chain Integrity Verification
+        elif path == "/api/audit/verify":
+            verification = verify_audit_chain()
+            self.send_json({"status": "success", "verification": verification})
+
+        # 5. API: Security Telemetry Events
+        elif path == "/api/events":
+            with get_db_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT * FROM security_events ORDER BY id DESC LIMIT 50")
+                events = [dict(r) for r in cursor.fetchall()]
+            self.send_json({"status": "success", "events": events, "count": len(events)})
+
+        # 6. API: Detection Rules & Metrics
+        elif path == "/api/detection/rules":
+            benchmark = evaluate_detection_benchmark()
+            self.send_json({"status": "success", "rules": DETECTION_RULES, "benchmark_metrics": benchmark})
+
+        # 7. API: SOAR Playbook Actions Log
+        elif path == "/api/soar/actions":
+            actions = get_soar_actions()
+            self.send_json({"status": "success", "actions": actions, "count": len(actions)})
+
+        # 8. API: Playbook Definitions
+        elif path == "/api/playbooks":
+            self.send_json({"status": "success", "playbooks": STRUCTURED_PLAYBOOKS})
+
+        # Default: Serve frontend static files
         else:
-            if self.path == "/":
+            if self.path == "/" or self.path == "":
                 self.path = "/index.html"
             super().do_GET()
 
     def do_POST(self):
-        data = self.parse_json_payload()
+        parsed = urllib.parse.urlparse(self.path)
+        path = parsed.path
+        analyst_header = self.headers.get("X-Analyst-ID", "Analyst Desk")
 
-        # CO2: Automated Corporate Triage Engine
-        if self.path == "/api/triage":
-            title = data.get("title", "Unnamed Corporate Incident")
-            asset = data.get("asset", "medium")
-            vector = data.get("vector", "ransomware")
-            cost = int(data.get("cost", 0))
-            systems = int(data.get("systems", 1))
+        try:
+            data = self.parse_json_body()
+        except ValueError as e:
+            self.send_error_json(str(e), status=413, code="PAYLOAD_TOO_LARGE")
+            return
+        except Exception as e:
+            self.send_error_json(f"Malformed JSON request: {str(e)}", status=400, code="INVALID_JSON")
+            return
 
-            result = score_threat(asset, vector, cost, systems)
-            case_id = f"CORP-{1000 + len(INCIDENTS):04d}"
+        # ─────────────────────────────────────────────────────────────────────
+        # 1. API: Quantitative Threat Triage & Incident Registration
+        # ─────────────────────────────────────────────────────────────────────
+        if path == "/api/triage":
+            title = str(data.get("title", "")).strip()
+            if not title:
+                self.send_error_json("Field 'title' is required.", status=422, code="VALIDATION_ERROR")
+                return
+
+            asset = str(data.get("asset", "medium")).lower().strip()
+            vector = str(data.get("vector", "ransomware")).lower().strip()
+
+            try:
+                cost = int(data.get("cost", 0))
+                systems = int(data.get("systems", 1))
+            except (ValueError, TypeError):
+                self.send_error_json("'cost' and 'systems' must be valid integers.", status=422, code="VALIDATION_ERROR")
+                return
+
+            cost = max(0, cost)
+            systems = max(1, systems)
+
+            risk_eval = calculate_risk_score(asset, vector, cost, systems)
+            with get_db_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT COUNT(*) FROM incidents")
+                count = cursor.fetchone()[0]
+
+            case_id = f"CORP-{1000 + count + 1}"
+            analyst = data.get("analyst") or analyst_header
+
             incident_record = {
                 "id": case_id,
                 "title": title,
@@ -171,69 +276,168 @@ class CyberShieldRequestHandler(http.server.SimpleHTTPRequestHandler):
                 "vector": vector,
                 "cost": cost,
                 "systems": systems,
-                "severity": result["level"],
-                "sla": result["sla"],
-                "score": result["score"],
-                "timestamp": utc_now(),
-                "status": "Assessed"
-            }
-            INCIDENTS.append(incident_record)
-            write_audit("CO2-TRIAGE", f"[{case_id}] {title} evaluated to {result['level']} (Score: {result['score']}/100)")
-            self.send_json_response({"status": "success", "case_id": case_id, **result})
-
-        # CO4: Playbook Execution
-        elif self.path == "/api/contain":
-            vector = data.get("vector", "ransomware")
-            case_id = data.get("case_id", "CORP-UNKNOWN")
-            steps = PLAYBOOKS.get(vector, ["Generic corporate containment sequence executed."])
-            for i, step in enumerate(steps, 1):
-                write_audit("CO4-CONTAIN", f"[{case_id}] Step {i}: {step}")
-            self.send_json_response({"status": "success", "case_id": case_id, "playbook": vector, "steps": steps})
-
-        # CO5: Forensic Evidence Logger
-        elif self.path == "/api/evidence":
-            item = data.get("item", "Artifact")
-            stage = data.get("stage", "Volatile RAM")
-            analyst = data.get("analyst", "Corporate DFIR Analyst")
-            host = data.get("host", "CORP-HOST01")
-
-            hash_val = calculate_sha256(f"{item}_{host}_{utc_now()}")
-            ev_id = f"EV-{len(EVIDENCE) + 1:03d}"
-            evidence_record = {
-                "id": ev_id,
-                "item": item,
-                "stage": stage,
+                "severity": risk_eval["level"],
+                "sla": risk_eval["sla"],
+                "score": risk_eval["score"],
+                "status": "Assessed / Queued",
                 "analyst": analyst,
-                "host": host,
-                "sha256": hash_val,
-                "timestamp": utc_now()
+                "detection_rule": data.get("detection_rule", "MANUAL-TRIAGE")
             }
-            EVIDENCE.append(evidence_record)
-            write_audit("CO5-FORENSICS", f"Acquired evidence {item} ({stage}) with SHA-256: {hash_val[:20]}...")
-            self.send_json_response({"status": "success", "record": evidence_record})
+
+            saved_id = save_incident(incident_record)
+            self.send_json({
+                "status": "success",
+                "incident": incident_record,
+                "risk_evaluation": risk_eval
+            })
+
+        # ─────────────────────────────────────────────────────────────────────
+        # 2. API: Real Backend SHA-256 Forensic Evidence Upload & Verification
+        # ─────────────────────────────────────────────────────────────────────
+        elif path == "/api/evidence/upload":
+            filename = str(data.get("filename", "")).strip()
+            file_base64 = data.get("file_base64", "")
+            client_sha256 = str(data.get("client_sha256", "")).strip().lower()
+
+            if not filename:
+                self.send_error_json("Field 'filename' is required.", status=422, code="VALIDATION_ERROR")
+                return
+
+            if not file_base64:
+                self.send_error_json("Field 'file_base64' is required.", status=422, code="VALIDATION_ERROR")
+                return
+
+            try:
+                file_bytes = base64.b64decode(file_base64)
+            except Exception as e:
+                self.send_error_json(f"Base64 decoding failed: {str(e)}", status=400, code="INVALID_BASE64")
+                return
+
+            stage = str(data.get("stage", "Volatile Memory (RAM)"))
+            analyst = str(data.get("analyst") or analyst_header)
+            host = str(data.get("host", "CORP-ENDPOINT01"))
+            acquisition_method = str(data.get("acquisition_method", "Browser W3C File Stream"))
+            incident_id = data.get("incident_id")
+
+            result = save_evidence_record(
+                filename=filename,
+                file_bytes=file_bytes,
+                client_sha256=client_sha256,
+                stage=stage,
+                analyst=analyst,
+                host=host,
+                acquisition_method=acquisition_method,
+                incident_id=incident_id
+            )
+
+            if result.get("status") == "error":
+                self.send_json(result, status=409)
+            elif result.get("status") == "duplicate":
+                self.send_json(result, status=200)
+            else:
+                self.send_json(result, status=201)
+
+        # ─────────────────────────────────────────────────────────────────────
+        # 3. API: Run Detection Engine Against Security Telemetry
+        # ─────────────────────────────────────────────────────────────────────
+        elif path == "/api/detection/run":
+            with get_db_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT * FROM security_events ORDER BY id ASC")
+                events = [dict(r) for r in cursor.fetchall()]
+
+            alerts = analyze_security_logs(events)
+            benchmark = evaluate_detection_benchmark()
+
+            add_audit_entry(
+                actor=analyst_header,
+                action="DETECTION_RUN",
+                details=f"Evaluated {len(events)} telemetry events against rules. Generated {len(alerts)} alerts."
+            )
+
+            self.send_json({
+                "status": "success",
+                "events_analyzed": len(events),
+                "alerts": alerts,
+                "benchmark_evaluation": benchmark
+            })
+
+        # ─────────────────────────────────────────────────────────────────────
+        # 4. API: Execute SOAR Playbook Action (with Approval Gate)
+        # ─────────────────────────────────────────────────────────────────────
+        elif path == "/api/contain/execute":
+            vector = str(data.get("vector", "ransomware")).lower()
+            step_id = str(data.get("step_id", "")).upper()
+            incident_id = str(data.get("incident_id", "CORP-GENERAL"))
+            analyst = data.get("analyst") or analyst_header
+
+            # Find step definition
+            steps = STRUCTURED_PLAYBOOKS.get(vector, [])
+            matching_step = next((s for s in steps if s["step_id"] == step_id), None)
+
+            if not matching_step:
+                self.send_error_json(f"Step ID '{step_id}' not found in playbook '{vector}'.", status=404, code="NOT_FOUND")
+                return
+
+            # Check if sensitive and needs approval
+            if matching_step["sensitive"] and not data.get("confirmed"):
+                self.send_json({
+                    "status": "pending_approval",
+                    "step_id": step_id,
+                    "name": matching_step["name"],
+                    "action_type": matching_step["type"],
+                    "message": f"SENSITIVE ACTION GATE: {matching_step['name']} will impact enterprise connectivity. Explicit operator confirmation required.",
+                    "command": matching_step["command"]
+                }, status=200)
+                return
+
+            # Log executed action
+            logged_action = log_soar_action(
+                incident_id=incident_id,
+                playbook=vector,
+                action_name=matching_step["name"],
+                action_type=matching_step["type"],
+                command_input=matching_step["command"],
+                execution_output=matching_step["output"],
+                exit_code=matching_step["exit_code"],
+                approval_status="APPROVED_AND_EXECUTED",
+                approved_by=analyst
+            )
+
+            self.send_json({
+                "status": "success",
+                "action": logged_action
+            })
 
         else:
-            self.send_json_response({"error": "Endpoint not found"}, 404)
+            self.send_error_json(f"Endpoint '{path}' not found.", status=404, code="NOT_FOUND")
 
     def log_message(self, fmt, *args):
-        # Suppress noisy default console requests; audit log takes precedence
+        # Suppress noisy standard HTTP access lines; the cryptographic audit trail logs all security actions
         pass
 
+
 if __name__ == "__main__":
-    print("=" * 70)
-    print("  CYBERSHIELD IR - CORPORATE IT INCIDENT RESPONSE SYSTEM")
-    print(f"  Web Dashboard : http://localhost:{PORT}/index.html")
-    print(f"  Triage API    : POST http://localhost:{PORT}/api/triage")
-    print(f"  Contain API   : POST http://localhost:{PORT}/api/contain")
-    print(f"  Evidence API  : POST http://localhost:{PORT}/api/evidence")
-    print(f"  Audit Trail   : GET  http://localhost:{PORT}/api/audit")
-    print("=" * 70)
-    write_audit("SYSTEM_START", f"Corporate Incident Response Server operational on port {PORT}")
+    init_db()
+    print("=" * 76)
+    print("  CYBERSHIELD IR - DFIR & INCIDENT RESPONSE PLATFORM (ENHANCED)")
+    print("  Standards  : RFC 3227 Volatility | ISO/IEC 27037 Evidence Integrity")
+    print("  Persistence: SQLite Storage (cybershield.db)")
+    print("  Audit Chain: Cryptographically Hash-Linked (SHA-256 Tamper-Evident)")
+    print("-" * 76)
+    print(f"  Web Dashboard  : http://localhost:{PORT}/index.html")
+    print(f"  Triage API     : POST http://localhost:{PORT}/api/triage")
+    print(f"  Evidence Upload: POST http://localhost:{PORT}/api/evidence/upload")
+    print(f"  Audit Verify   : GET  http://localhost:{PORT}/api/audit/verify")
+    print(f"  Detection API  : POST http://localhost:{PORT}/api/detection/run")
+    print("=" * 76)
+
+    add_audit_entry("SYSTEM_INITIALIZER", "SERVER_START", f"CyberShield IR Server listening on port {PORT}")
     socketserver.TCPServer.allow_reuse_address = True
     try:
-        with socketserver.TCPServer(("", PORT), CyberShieldRequestHandler) as server:
+        with socketserver.TCPServer(("", PORT), CyberShieldHandler) as server:
             server.serve_forever()
     except KeyboardInterrupt:
         print("\n[!] Shutting down server gracefully.")
-        write_audit("SYSTEM_STOP", "Server terminated by operator.")
+        add_audit_entry("SYSTEM_INITIALIZER", "SERVER_STOP", "Server shut down cleanly by operator.")
         sys.exit(0)
