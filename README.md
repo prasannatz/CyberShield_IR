@@ -2,31 +2,82 @@
 
 An automated, enterprise-grade Security Operations Center (SOC) incident response and digital forensics management platform designed for modern corporate IT infrastructure.
 
-CyberShield IR bridges the gap between high-level incident response frameworks and rapid, automated technical execution. The platform enables corporate security teams to detect intrusions, calculate real-time algorithmic risk scores, execute surgical containment playbooks without causing operational downtime, and preserve court-admissible forensic evidence.
+CyberShield IR bridges the gap between high-level incident response frameworks and rapid, automated technical execution. The platform enables corporate security teams to detect intrusions, calculate real-time quantitative risk scores, execute surgical containment playbooks without causing operational downtime, and preserve court-admissible forensic evidence.
 
 ---
 
-## 🏛️ Architecture & Core Modules
+## 🏛️ System Architecture & Implementation Transparency
 
-The platform is designed around the **NIST SP 800-61 Rev. 2** lifecycle and adheres to **RFC 3227** guidelines for evidentiary data integrity:
+To ensure strict academic and technical credibility, the architecture explicitly distinguishes between **implemented software capabilities** and **simulated threat telemetry models**:
 
 ```
-+-------------------------------------------------------------------------------------------------------+
-|                                    CYBERSHIELD IR PLATFORM ARCHITECTURE                               |
-+-------------------------------------------------------------------------------------------------------+
-|  1. THREAT TRIAGE ENGINE              | Dynamic risk scoring formula evaluating asset criticality,     |
-|                                       | attack vectors, financial exposure, and blast radius.         |
-|---------------------------------------+---------------------------------------------------------------|
-|  2. SOAR PLAYBOOK ORCHESTRATION       | Surgical containment actions: VLAN quarantine, Active         |
-|                                       | Directory KRBTGT dual-reset, M365 session invalidation, BGP.  |
-|---------------------------------------+---------------------------------------------------------------|
-|  3. DIGITAL FORENSICS & INTEGRITY     | Adheres to RFC 3227 Order of Volatility with live SHA-256      |
-|                                       | cryptographic evidence hashing and Chain of Custody logging.  |
-|---------------------------------------+---------------------------------------------------------------|
-|  4. AUDIT & REGULATORY REPORTING      | Automated 5-Whys Root Cause Analysis and compliance tracking  |
-|                                       | for GDPR Art. 33 (72h), ISO/IEC 27001, SOC 2, and SEC 8-K.   |
-+-------------------------------------------------------------------------------------------------------+
++--------------------------------------------------------------------------------------------------------------------+
+|                                      CYBERSHIELD IR SYSTEM ARCHITECTURE                                            |
++--------------------------------------------------------------------------------------------------------------------+
+|  LAYER               | TECHNOLOGY STACK              | STATUS              | CAPABILITIES                          |
++----------------------+-------------------------------+---------------------+---------------------------------------+
+|  1. Presentation     | HTML5, CSS3, Bootstrap 5.3,   | 100% Implemented    | High-contrast responsive SOC UI, live |
+|     & Dashboard      | Vanilla JavaScript, FontAwesome|                    | evidence verification, report exporter|
+|----------------------+-------------------------------+---------------------+---------------------------------------+
+|  2. Cryptographic    | W3C Web Crypto (Browser) &   | 100% Implemented    | Real client/server SHA-256 byte digest|
+|     Integrity Engine | Python hashlib.sha256         |                     | calculation and hash-match check.     |
+|----------------------+-------------------------------+---------------------+---------------------------------------+
+|  3. Quantitative     | Multi-factor weighted formula | 100% Implemented    | Computes deterministic 0-100 risk score|
+|     Triage Engine    | in JavaScript & Python        |                     | and assigns response SLAs (SEV-1..4). |
+|----------------------+-------------------------------+---------------------+---------------------------------------+
+|  4. Forensic Vault   | In-memory & JSON file ledger  | 100% Implemented    | RFC 3227 Order of Volatility tracking |
+|     & Chain of Custody| (triage_cli.py & index.html) |                     | with ISO/IEC 27037 transfer logs.     |
+|----------------------+-------------------------------+---------------------+---------------------------------------+
+|  5. Backend API      | Python 3 Standard Library     | 100% Implemented    | REST API endpoints (/api/triage,      |
+|     Micro-Server     | (http.server, socketserver)   |                     | /api/contain, /api/evidence, /api/audit)|
+|----------------------+-------------------------------+---------------------+---------------------------------------+
+|  6. Threat Telemetry | Synthetic Enterprise Traces   | Simulated Model     | EDR process trees, SIEM correlations, |
+|     & Detection Logs | (LockBit 3.0, AiTM, DDoS)     |                     | and honeytoken triggers.              |
+|----------------------+-------------------------------+---------------------+---------------------------------------+
+|  7. SOAR Automation  | Script Command Orchestration  | Simulated SOAR      | Shows exact shell commands, inputs,   |
+|     Playbooks        | (Cisco ACLs, KRBTGT, WinPmem) |                     | execution exit codes, and audit logs. |
++--------------------------------------------------------------------------------------------------------------------+
 ```
+
+---
+
+## 🔍 How Incidents Are Detected
+
+Incidents in CyberShield IR are not merely displayed—they are driven by simulated multi-sensor detection pipelines modeling modern corporate security operations:
+
+1. **Endpoint Detection & Response (EDR):** Detects process anomalies such as `svchost.exe` spawning `vssadmin.exe delete shadows /all /quiet` or `bcdedit.exe /set {default} recoveryenabled No` (T1490: Inhibit System Recovery).
+2. **SIEM Correlation Rules:** Correlates multiple SMB (Port 445) authentications originating from anomalous internal workstations toward Tier-0 Domain Controllers using harvested administrator tokens (T1021.002: SMB/Windows Admin Shares).
+3. **Active Directory Honeytokens:** Detects unauthorized Kerberos pre-authentication requests on fake administrator accounts (`svc_sql_admin`), exposing attacker reconnaissance.
+
+---
+
+## 🧮 Quantitative Risk Scoring Model
+
+Incident severity is computed objectively using a weighted four-factor formula:
+
+$$\text{Risk Score} = W_{\text{Asset}} + W_{\text{Vector}} + W_{\text{Exposure}} + W_{\text{BlastRadius}}$$
+
+* **Asset Criticality ($W_{\text{Asset}}$, max 40):** Tier-0 Domain Controller = 40, Enterprise ERP/CRM = 25, Workstation Subnet = 12, Staging VM = 5.
+* **Attack Vector Profile ($W_{\text{Vector}}$, max 35):** Double-Extortion Ransomware = 35, M365 AiTM Email Compromise = 30, Remote VPN Tunnel Infiltration = 28, Layer-7 DDoS = 18, Malicious Insider = 15.
+* **Financial Exposure ($W_{\text{Exposure}}$, max 20):** $> \$1\text{M} = 20$, $> \$500\text{k} = 14$, $> \$100\text{k} = 8$, $< \$100\text{k} = 2$.
+* **Blast Radius ($W_{\text{BlastRadius}}$, max 10):** $\text{Impacted Systems} \times 2$ (capped at 10).
+
+### Four-Tier Severity Matrix & SLAs:
+* **SEV-1 (Critical) [Score $\ge 80$]:** Response SLA `< 15 minutes`. Immediate War Room activation.
+* **SEV-2 (High) [Score $55 - 79$]:** Response SLA `< 30 minutes`. Core CSIRT containment.
+* **SEV-3 (Medium) [Score $30 - 54$]:** Response SLA `< 2 hours`. Tier-2 SOC endpoint quarantine.
+* **SEV-4 (Low) [Score $< 30$]:** Response SLA `< 8 hours`. Standard analyst review queue.
+
+---
+
+## 🔬 Real Cryptographic Evidence Verification (RFC 3227 & ISO/IEC 27037)
+
+The forensic suite strictly adheres to international evidentiary standards:
+* **Real File Hashing:** In the **Forensics** tab, users select any actual file from their local drive. The platform calculates the genuine cryptographic SHA-256 byte digest in real-time using the native W3C Web Cryptography API (`crypto.subtle.digest`).
+* **Integrity Match Verification:** Users can paste an expected SHA-256 hash to automatically test whether evidence has remained authentic or has suffered bit-level corruption/tampering.
+* **RFC 3227 Order of Volatility:** Evidence is captured in decreasing order of fragility:
+  $$\text{Tier 1: Volatile Memory (RAM)} \longrightarrow \text{Tier 2: Network Sockets} \longrightarrow \text{Tier 3: Process Tables} \longrightarrow \text{Tier 4: Disk Images} \longrightarrow \text{Tier 5: Remote SIEM Logs}$$
+* **ISO/IEC 27037 Chain of Custody:** Every acquired artifact is logged with timestamp, custodian identity, source host, purpose of transfer, and verified SHA-256 digest.
 
 ---
 
@@ -43,7 +94,7 @@ The platform is designed around the **NIST SP 800-61 Rev. 2** lifecycle and adhe
 
 ```text
 CyberShield_IR/
-├── index.html                     # Full-featured SOC Dashboard (Dark Theme, Simulator, Exporter)
+├── index.html                     # Full-featured SOC Dashboard (Real SHA-256 Engine, Architecture, Simulator)
 ├── app.py                         # Enterprise REST API & Automation Server (Python)
 ├── triage_cli.py                  # Command-Line Forensic Acquisition & Triage Suite
 ├── test_prototype.py              # Automated Unit & Integration Test Suite
@@ -51,7 +102,8 @@ CyberShield_IR/
 ├── CyberShield_IR_Presentation.pptx # Standalone 16:9 Presentation Deck (.pptx)
 ├── open_dashboard.bat             # 1-Click Browser Launcher (Standalone Mode)
 ├── run.bat                        # 1-Click Server & Web Dashboard Launcher
-└── run_triage.bat                 # 1-Click Terminal Forensic Demonstration
+├── run_triage.bat                 # 1-Click Terminal Forensic Demonstration
+└── push_to_github.bat             # Automated GitHub Push Wizard
 ```
 
 ---
@@ -59,7 +111,7 @@ CyberShield_IR/
 ## 🚀 Deployment & Usage
 
 ### 1. Standalone Browser Mode (Zero Dependency)
-Double-click `open_dashboard.bat` or open `index.html` directly in any modern web browser (Google Chrome, Microsoft Edge, Mozilla Firefox). All UI components, algorithmic scoring engines, and reporting generators run client-side.
+Double-click `open_dashboard.bat` or open `index.html` directly in any modern web browser (Google Chrome, Microsoft Edge, Mozilla Firefox). All UI components, genuine Web Crypto SHA-256 calculation, and reporting engines run client-side.
 
 ### 2. Full-Stack Server Mode
 To run the centralized REST API server and append-only audit trail logging:
@@ -86,34 +138,13 @@ python triage_cli.py
 
 ---
 
-## 🛡️ Response Playbooks
+## 🛡️ Response Playbooks (Simulated Orchestration)
 
-### Playbook A: Corporate Ransomware & Active Directory Defense
-1. **Network Quarantine (VLAN Isolation):** Restricts network communication at switch/firewall layer while keeping host AC power energized to preserve encryption keys and memory-resident malware beacons in volatile RAM.
-2. **Active Directory Defense:** Executes dual password resets of the `KRBTGT` service account to invalidate all Kerberos Golden and Silver tickets domain-wide.
-3. **Volatile Memory Acquisition:** Captures physical memory dumps to write-blocked storage media prior to disk tampering.
-4. **Immutable Storage Validation:** Verifies pre-compromise snapshots within write-once-read-many (WORM) storage.
-5. **Gold Master Rebuild:** Provisions hardened machine images and replays transaction logs up to the cut-off timestamp.
+To prevent accidental destruction of production infrastructure during demonstrations, playbook executions run in **Simulation Mode**, logging the exact commands, inputs, and exit codes:
 
-### Playbook B: Executive M365 Email Compromise & VPN Tunneling
-1. **OAuth Session Purge:** Revokes all active enterprise refresh tokens and terminates active browser session cookies via Microsoft Graph API.
-2. **Inbox Rule Sanitization:** Identifies and deletes hidden forwarding rules routing confidential correspondence to external endpoints.
-3. **Perimeter Tunnel Severance:** Terminates active remote access sessions on perimeter SSL-VPN gateways and enforces step-up FIDO2 hardware token MFA.
-
-### Playbook C: Perimeter DDoS & Application Flooding
-1. **BGP Route Shift:** Diverts ingress edge traffic to upstream Anycast cloud scrubbing nodes (Cloudflare Magic Transit, AWS Shield).
-2. **Layer-7 Rate Limiting:** Enforces 5 req/s thresholds on authentication and single sign-on (SSO) endpoints.
-3. **Botnet Filtering:** Drops requests originating from anonymous proxies, Tor exit nodes, and known hostile Autonomous System Numbers (ASNs).
-
----
-
-## ⚖️ Evidence Integrity & Chain of Custody
-
-The platform maintains strict compliance with **RFC 3227** and **ISO/IEC 27037**:
-* **Order of Volatility Execution:**
-  $$\text{CPU Registers / Cache} \longrightarrow \text{Physical RAM} \longrightarrow \text{Network Sockets / ARP} \longrightarrow \text{Process State} \longrightarrow \text{Disk Storage} \longrightarrow \text{Remote Telemetry}$$
-* **Cryptographic Verification:** Every evidence artifact is fingerprinted with an immediate **SHA-256** cryptographic hash upon acquisition.
-* **Audit Trail:** An append-only ledger logs the timestamp, custodian identity, releasing authority, and transfer rationale for all forensic assets.
+* **Playbook A (Ransomware & Active Directory):** Executes switch ACL quarantine on VLAN 10 (keeps AC power energized for RAM triage), KRBTGT dual password reset, live WinPmem RAM dumping, and WORM storage verification.
+* **Playbook B (M365 Email & VPN):** Executes Graph API OAuth token invalidation, malicious inbox rule purging, VPN tunnel termination, and FIDO2 step-up challenges.
+* **Playbook C (Perimeter DDoS):** Diverts BGP Anycast routes to upstream cloud scrubbers, enforces 5 req/s rate limits on login endpoints, and drops hostile proxy ASNs.
 
 ---
 

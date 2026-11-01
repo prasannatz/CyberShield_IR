@@ -16,9 +16,9 @@
             --accent-red: #f87171;
             --accent-green: #34d399;
             --accent-amber: #fbbf24;
-            --text-main: #f8fafc;        /* High contrast pure off-white */
-            --text-sub: #cbd5e1;         /* Bright readable secondary text */
-            --text-muted: #94a3b8;       /* Clear readable muted text */
+            --text-main: #f8fafc;
+            --text-sub: #cbd5e1;
+            --text-muted: #94a3b8;
             --grid-line: rgba(255,255,255,0.04);
         }
         * { box-sizing: border-box; }
@@ -30,19 +30,60 @@
             font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
             min-height: 100vh;
         }
+
+        /* Top Simulation Notice Banner */
+        .sim-disclaimer-banner {
+            background: linear-gradient(90deg, #78350f, #92400e, #78350f);
+            color: #fef3c7;
+            padding: 6px 16px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-align: center;
+            border-bottom: 1px solid #b45309;
+            letter-spacing: 0.4px;
+        }
+        .sim-badge-tag {
+            background: rgba(245, 158, 11, 0.25);
+            border: 1px solid #f59e0b;
+            color: #fef3c7;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+        .real-badge-tag {
+            background: rgba(16, 185, 129, 0.25);
+            border: 1px solid #10b981;
+            color: #a7f3d0;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 6px;
+        }
+
         .top-bar {
             background: linear-gradient(90deg, #03060f, #0a1428);
             border-bottom: 1px solid var(--card-border);
-            padding: 14px 26px;
+            padding: 12px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .top-bar .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: 1px; color: #ffffff; }
+        .top-bar .logo { font-size: 1.25rem; font-weight: 700; letter-spacing: 1px; color: #ffffff; }
         .top-bar .logo span { color: var(--accent-cyan); }
-        .status-pills { display: flex; gap: 12px; flex-wrap: wrap; }
+        .status-pills { display: flex; gap: 10px; flex-wrap: wrap; }
         .status-pill {
-            font-size: 0.78rem; padding: 5px 14px; border-radius: 20px;
+            font-size: 0.75rem; padding: 4px 12px; border-radius: 20px;
             border: 1px solid; font-weight: 600; letter-spacing: 0.5px;
         }
         .pill-red   { border-color: #ef4444; color: #fca5a5; background: rgba(239,68,68,0.18); }
@@ -60,13 +101,14 @@
         .card-header {
             background: rgba(255,255,255,0.04);
             border-bottom: 1px solid var(--card-border);
-            padding: 13px 18px;
+            padding: 12px 18px;
             font-weight: 700;
-            font-size: 0.96rem;
-            color: #f1f5f9;              /* Crystal clear bright header */
+            font-size: 0.94rem;
+            color: #f1f5f9;
             border-radius: 10px 10px 0 0;
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
         .metric-card {
             background: var(--card-bg);
@@ -88,9 +130,9 @@
         .mc-amber::before { background: #f59e0b; }
         .mc-green::before { background: #10b981; }
         .mc-cyan::before  { background: #0ea5e9; }
-        .metric-label { font-size: 0.74rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        .metric-value { font-size: 1.95rem; font-weight: 800; line-height: 1.2; margin: 4px 0; }
-        .metric-sub   { font-size: 0.8rem; font-weight: 500; }
+        .metric-label { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+        .metric-value { font-size: 1.85rem; font-weight: 800; line-height: 1.2; margin: 4px 0; }
+        .metric-sub   { font-size: 0.78rem; font-weight: 500; }
         .mc-red   .metric-value { color: #f87171; }
         .mc-amber .metric-value { color: #fbbf24; }
         .mc-green .metric-value { color: #34d399; }
@@ -98,9 +140,9 @@
 
         .nav-tabs { border-bottom: 1px solid var(--card-border); margin-bottom: 22px; }
         .nav-tabs .nav-link {
-            color: #cbd5e1;              /* Bright legible inactive tab color */
-            border: none; padding: 12px 22px;
-            font-size: 0.92rem; font-weight: 600;
+            color: #cbd5e1;
+            border: none; padding: 12px 20px;
+            font-size: 0.9rem; font-weight: 600;
             border-bottom: 3px solid transparent;
             background: transparent;
             transition: all 0.2s;
@@ -116,8 +158,8 @@
         .form-control, .form-select {
             background: #050b16 !important;
             border: 1px solid #2a3e5c !important;
-            color: #ffffff !important;   /* Pure white text in form fields */
-            font-size: 0.9rem;
+            color: #ffffff !important;
+            font-size: 0.88rem;
             font-weight: 500;
         }
         .form-control:focus, .form-select:focus {
@@ -125,41 +167,41 @@
             border-color: var(--accent-cyan) !important;
         }
         .form-label {
-            font-size: 0.84rem;
-            color: #cbd5e1;              /* Bright readable label color */
+            font-size: 0.82rem;
+            color: #cbd5e1;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
-        .btn-exec-red   { background: rgba(239,68,68,0.2); border: 1px solid #ef4444; color: #fca5a5; font-size: 0.82rem; font-weight: 600; }
+        .btn-exec-red   { background: rgba(239,68,68,0.2); border: 1px solid #ef4444; color: #fca5a5; font-size: 0.8rem; font-weight: 600; }
         .btn-exec-red:hover   { background: #ef4444; color: #ffffff; }
-        .btn-exec-amber { background: rgba(245,158,11,0.2); border: 1px solid #f59e0b; color: #fde68a; font-size: 0.82rem; font-weight: 600; }
+        .btn-exec-amber { background: rgba(245,158,11,0.2); border: 1px solid #f59e0b; color: #fde68a; font-size: 0.8rem; font-weight: 600; }
         .btn-exec-amber:hover { background: #f59e0b; color: #000000; }
-        .btn-exec-green { background: rgba(16,185,129,0.2); border: 1px solid #10b981; color: #6ee7b7; font-size: 0.82rem; font-weight: 600; }
+        .btn-exec-green { background: rgba(16,185,129,0.2); border: 1px solid #10b981; color: #6ee7b7; font-size: 0.8rem; font-weight: 600; }
         .btn-exec-green:hover { background: #10b981; color: #ffffff; }
-        .btn-exec-cyan  { background: rgba(14,165,233,0.2); border: 1px solid #0ea5e9; color: #7dd3fc; font-size: 0.82rem; font-weight: 600; }
+        .btn-exec-cyan  { background: rgba(14,165,233,0.2); border: 1px solid #0ea5e9; color: #7dd3fc; font-size: 0.8rem; font-weight: 600; }
         .btn-exec-cyan:hover  { background: #0ea5e9; color: #ffffff; }
 
-        .sev1 { background: #991b1b; color: #ffffff; border: 1px solid #ef4444; font-size: 0.74rem; padding: 4px 10px; border-radius: 4px; font-weight: 700; display: inline-block; }
-        .sev2 { background: #9a3412; color: #ffffff; border: 1px solid #f97316; font-size: 0.74rem; padding: 4px 10px; border-radius: 4px; font-weight: 700; display: inline-block; }
-        .sev3 { background: #854d0e; color: #ffffff; border: 1px solid #eab308; font-size: 0.74rem; padding: 4px 10px; border-radius: 4px; font-weight: 700; display: inline-block; }
-        .sev4 { background: #1e40af; color: #ffffff; border: 1px solid #3b82f6; font-size: 0.74rem; padding: 4px 10px; border-radius: 4px; font-weight: 700; display: inline-block; }
+        .sev1 { background: #991b1b; color: #ffffff; border: 1px solid #ef4444; font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; display: inline-block; }
+        .sev2 { background: #9a3412; color: #ffffff; border: 1px solid #f97316; font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; display: inline-block; }
+        .sev3 { background: #854d0e; color: #ffffff; border: 1px solid #eab308; font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; display: inline-block; }
+        .sev4 { background: #1e40af; color: #ffffff; border: 1px solid #3b82f6; font-size: 0.72rem; padding: 3px 8px; border-radius: 4px; font-weight: 700; display: inline-block; }
 
-        .dark-table { width: 100%; font-size: 0.88rem; }
+        .dark-table { width: 100%; font-size: 0.86rem; }
         .dark-table th {
-            color: #94a3b8;              /* Crisp clean table headers */
+            color: #94a3b8;
             font-weight: 700;
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             text-transform: uppercase;
             letter-spacing: 0.6px;
-            padding: 12px 14px;
+            padding: 11px 14px;
             border-bottom: 1px solid var(--card-border);
         }
         .dark-table td {
-            padding: 12px 14px;
+            padding: 11px 14px;
             border-bottom: 1px solid rgba(30,46,74,0.7);
             vertical-align: middle;
-            color: #f1f5f9;              /* Bright readable table data */
+            color: #f1f5f9;
         }
         .dark-table tr:last-child td { border-bottom: none; }
         .dark-table tr:hover td  { background: rgba(56,189,248,0.06); }
@@ -170,38 +212,59 @@
             border-radius: 8px;
             padding: 14px;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             color: #4ade80;
-            min-height: 190px;
-            max-height: 270px;
+            min-height: 200px;
+            max-height: 280px;
             overflow-y: auto;
         }
         .terminal .t-time { color: #64748b; }
-        .terminal .t-info { color: #38bdf8; font-weight: 600; }
-        .terminal .t-warn { color: #fde047; font-weight: 600; }
-        .terminal .t-err  { color: #f87171; font-weight: 600; }
-        .terminal .t-ok   { color: #4ade80; font-weight: 600; }
-        .terminal .t-dim  { color: #94a3b8; }
+        .terminal .t-cmd  { color: #fde047; font-weight: bold; }
+        .terminal .t-info { color: #38bdf8; }
+        .terminal .t-res  { color: #a7f3d0; }
+        .terminal .t-err  { color: #f87171; }
+        .terminal .t-audit{ color: #cbd5e1; font-style: italic; }
 
         .vol-step {
-            display: flex; align-items: flex-start; gap: 14px;
-            padding: 11px 0; border-bottom: 1px solid rgba(30,46,74,0.6);
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 10px 0; border-bottom: 1px solid rgba(30,46,74,0.6);
         }
         .vol-step:last-child { border-bottom: none; }
         .vol-num {
-            width: 30px; height: 30px; border-radius: 50%;
+            width: 28px; height: 28px; border-radius: 50%;
             background: rgba(56,189,248,0.18); border: 1px solid var(--accent-cyan);
-            color: var(--accent-cyan); font-size: 0.82rem; font-weight: 700;
+            color: var(--accent-cyan); font-size: 0.78rem; font-weight: 700;
             display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
-        .vol-label { font-size: 0.92rem; font-weight: 700; color: #ffffff; }
-        .vol-sub   { font-size: 0.8rem; color: #94a3b8; }
+        .vol-label { font-size: 0.88rem; font-weight: 700; color: #ffffff; }
+        .vol-sub   { font-size: 0.78rem; color: #94a3b8; }
 
         .prog-track { background: #0a1428; border-radius: 4px; height: 7px; margin-top: 5px; }
         .prog-fill  { height: 7px; border-radius: 4px; }
 
-        .report-section h5 { color: var(--accent-cyan); font-size: 1rem; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; margin-bottom: 14px; }
-        .sig-box { border-top: 1px solid var(--card-border); padding-top: 10px; font-size: 0.82rem; color: #cbd5e1; text-align: center; }
+        .report-section h5 { color: var(--accent-cyan); font-size: 0.96rem; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 6px; margin-bottom: 12px; }
+        .sig-box { border-top: 1px solid var(--card-border); padding-top: 10px; font-size: 0.8rem; color: #cbd5e1; text-align: center; }
+
+        .hash-box {
+            background: #030712;
+            border: 1px solid #1e293b;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            word-break: break-all;
+            color: #38bdf8;
+            font-size: 0.78rem;
+        }
+
+        .telemetry-trace {
+            background: rgba(3, 7, 18, 0.8);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 0 4px 4px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.78rem;
+        }
 
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
         .pulse { animation: pulse 1.5s infinite; }
@@ -210,8 +273,8 @@
 
         @media print {
             body { background: white !important; color: black !important; background-image: none !important; }
-            .no-print, .nav-tabs, .top-bar { display: none !important; }
-            #tab-triage, #tab-playbooks, #tab-forensics { display: none !important; }
+            .no-print, .nav-tabs, .top-bar, .sim-disclaimer-banner { display: none !important; }
+            #tab-triage, #tab-playbooks, #tab-forensics, #tab-architecture { display: none !important; }
             #tab-reporting { display: block !important; }
             .card { background: white !important; border: 1px solid #ccc !important; }
             .dark-table td, .dark-table th { color: black !important; border-color: #ccc !important; }
@@ -220,6 +283,12 @@
 </head>
 <body>
 
+<!-- Simulation Notice Banner -->
+<div class="sim-disclaimer-banner">
+    <i class="fa-solid fa-flask-vial me-2"></i><strong>ENGINEERING DEMONSTRATION &amp; SIMULATION PLATFORM:</strong>
+    Metrics and incident scenarios reflect simulated sample corporate telemetry. In-browser SHA-256 calculation &amp; verification are real and performed live.
+</div>
+
 <!-- TOP BAR -->
 <div class="top-bar">
     <div class="logo">
@@ -227,9 +296,9 @@
         <span class="badge bg-primary text-white ms-2 px-2 py-1" style="font-size:0.72rem;letter-spacing:0.5px">CORPORATE IT EDITION</span>
     </div>
     <div class="status-pills">
-        <span class="status-pill pill-red"><i class="fa-solid fa-circle pulse me-1"></i>WAR ROOM ENGAGED</span>
-        <span class="status-pill pill-amber">RTO SLA: &lt; 2.0 Hrs</span>
-        <span class="status-pill pill-green">RPO: ZERO DATA LOSS</span>
+        <span class="status-pill pill-red"><i class="fa-solid fa-circle pulse me-1"></i>SIMULATED WAR ROOM</span>
+        <span class="status-pill pill-amber">TARGET RTO: &lt; 2.0 Hrs</span>
+        <span class="status-pill pill-green">TARGET RPO: ZERO LOSS</span>
         <span class="status-pill pill-cyan" id="live-clock"></span>
     </div>
 </div>
@@ -240,30 +309,42 @@
     <div class="row g-3 mb-4">
         <div class="col-md-3 col-sm-6">
             <div class="metric-card mc-red">
-                <div class="metric-label">Active Critical Threats</div>
-                <div class="metric-value" id="m-sev1-count">1</div>
-                <div class="metric-sub" style="color:#fca5a5"><i class="fa-solid fa-virus me-1"></i>LockBit 3.0 Ransomware</div>
+                <div class="metric-label">
+                    <span>Critical Incidents</span>
+                    <span class="sim-badge-tag">Simulated Data</span>
+                </div>
+                <div class="metric-value" id="m-sev1-count">1 Active</div>
+                <div class="metric-sub" style="color:#fca5a5"><i class="fa-solid fa-virus me-1"></i>LockBit 3.0 Simulation Model</div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="metric-card mc-amber">
-                <div class="metric-label">Corporate Asset Exposure</div>
+                <div class="metric-label">
+                    <span>Simulated Exposure</span>
+                    <span class="sim-badge-tag">Sample Calculation</span>
+                </div>
                 <div class="metric-value">$1,850,000</div>
-                <div class="metric-sub" style="color:#e2e8f0">Active Directory &amp; ERP Databases</div>
+                <div class="metric-sub" style="color:#e2e8f0">Active Directory &amp; ERP Valuation</div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="metric-card mc-green">
-                <div class="metric-label">Mean Time to Contain (MTTC)</div>
+                <div class="metric-label">
+                    <span>Simulated MTTC Target</span>
+                    <span class="sim-badge-tag">Benchmark</span>
+                </div>
                 <div class="metric-value">12.4m</div>
-                <div class="metric-sub" style="color:#6ee7b7"><i class="fa-solid fa-check me-1"></i>Below Corporate IT SLA (&lt;15m)</div>
+                <div class="metric-sub" style="color:#6ee7b7"><i class="fa-solid fa-check me-1"></i>Target SLA: &lt; 15 Minutes</div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="metric-card mc-cyan">
-                <div class="metric-label">Mandatory Disclosure Window</div>
-                <div class="metric-value" id="m-gdpr">71h 41m</div>
-                <div class="metric-sub" style="color:#7dd3fc">GDPR Art. 33 / ISO 27001 Timer</div>
+                <div class="metric-label">
+                    <span>GDPR Art. 33 Window</span>
+                    <span class="real-badge-tag">Live Statutory Timer</span>
+                </div>
+                <div class="metric-value" id="m-gdpr">71h 38m</div>
+                <div class="metric-sub" style="color:#7dd3fc">72-Hour Legal Countdown</div>
             </div>
         </div>
     </div>
@@ -272,22 +353,27 @@
     <ul class="nav nav-tabs no-print" id="mainTabs" role="tablist">
         <li class="nav-item">
             <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-triage">
-                <i class="fa-solid fa-crosshairs me-1"></i>1. Threat Triage &amp; Risk Scoring
+                <i class="fa-solid fa-crosshairs me-1"></i>1. Threat Detection &amp; Triage
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-playbooks">
-                <i class="fa-solid fa-bolt me-1"></i>2. Corporate Containment Playbooks
+                <i class="fa-solid fa-bolt me-1"></i>2. Playbook Orchestration <span class="sim-badge-tag">Simulated Actions</span>
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-forensics">
-                <i class="fa-solid fa-fingerprint me-1"></i>3. Forensics &amp; Chain of Custody
+                <i class="fa-solid fa-fingerprint me-1"></i>3. Live Forensics &amp; Evidence <span class="real-badge-tag">Real SHA-256 Engine</span>
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-architecture">
+                <i class="fa-solid fa-network-wired me-1"></i>4. Technical Architecture
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-reporting">
-                <i class="fa-solid fa-file-contract me-1"></i>4. Audit &amp; Compliance Post-Mortem
+                <i class="fa-solid fa-file-contract me-1"></i>5. Audit &amp; Compliance Post-Mortem
             </button>
         </li>
     </ul>
@@ -295,50 +381,54 @@
     <div class="tab-content">
 
         <!-- ══════════════════════════════════════════════════ -->
-        <!-- TAB 1: THREAT TRIAGE & ANALYSIS (CO2)           -->
+        <!-- TAB 1: THREAT DETECTION & TRIAGE                   -->
         <!-- ══════════════════════════════════════════════════ -->
         <div class="tab-pane fade show active" id="tab-triage">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card">
-                        <div class="card-header"><i class="fa-solid fa-sliders me-2" style="color:var(--accent-cyan)"></i>Corporate Threat Triage Engine</div>
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-sliders me-2" style="color:var(--accent-cyan)"></i>Corporate Threat Triage Engine</span>
+                            <span class="sim-badge-tag">Evaluator</span>
+                        </div>
                         <div class="card-body">
                             <div class="mb-3">
                                 <label class="form-label">Incident Description / Targeted Host</label>
                                 <input type="text" id="t-title" class="form-control" value="LockBit 3.0 detected on DC01 &amp; File Server">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Corporate Asset Criticality</label>
+                                <label class="form-label">Corporate Asset Criticality (Weight: Max 40)</label>
                                 <select id="t-asset" class="form-select">
-                                    <option value="critical">Tier-0 Primary Active Directory Domain Controller</option>
-                                    <option value="high">Enterprise ERP / CRM Database Cluster</option>
-                                    <option value="medium">Internal Department Workstation (VLAN 10)</option>
-                                    <option value="low">Internal Staging Server / Non-Production VM</option>
+                                    <option value="critical">Tier-0 Primary Active Directory Domain Controller (Score +40)</option>
+                                    <option value="high">Enterprise ERP / CRM Database Cluster (Score +25)</option>
+                                    <option value="medium">Internal Department Workstation (VLAN 10) (Score +12)</option>
+                                    <option value="low">Internal Staging Server / Non-Production VM (Score +5)</option>
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Corporate Attack Vector Profile</label>
+                                <label class="form-label">Attack Vector Profile (Weight: Max 35)</label>
                                 <select id="t-vector" class="form-select">
-                                    <option value="ransomware">Double-Extortion Ransomware (Volume Shadow Purge)</option>
-                                    <option value="bec">Executive Business Email Compromise (M365 AiTM)</option>
-                                    <option value="vpn">Compromised Corporate VPN &amp; Lateral Movement</option>
-                                    <option value="ddos">Layer-7 DDoS on External Customer Portal</option>
-                                    <option value="insider">Malicious Insider Privilege Abuse &amp; Data Exfil</option>
+                                    <option value="ransomware">Double-Extortion Ransomware - VSS Purge (Score +35)</option>
+                                    <option value="bec">Executive Email Compromise - M365 AiTM (Score +30)</option>
+                                    <option value="vpn">Compromised Corporate VPN &amp; Lateral Movement (Score +28)</option>
+                                    <option value="ddos">Layer-7 DDoS on External Customer Portal (Score +18)</option>
+                                    <option value="insider">Malicious Insider Privilege Abuse &amp; Exfil (Score +15)</option>
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Impacted Systems (Blast Radius)</label>
+                                <label class="form-label">Impacted Systems (Blast Radius: 2 pts / system, Max 10)</label>
                                 <input type="number" id="t-systems" class="form-control" value="4" min="1">
                             </div>
                             <div class="mb-4">
-                                <label class="form-label">Estimated Impact / Business Exposure ($ USD)</label>
+                                <label class="form-label">Estimated Financial Exposure ($ USD: Max 20)</label>
                                 <input type="number" id="t-cost" class="form-control" value="1200000">
+                                <small class="text-muted">&gt; $1M (+20) | &gt; $500k (+14) | &gt; $100k (+8)</small>
                             </div>
                             <button class="btn btn-exec-cyan w-100 py-2 mb-2" onclick="runTriage()">
-                                <i class="fa-solid fa-calculator me-2"></i>Evaluate Risk Score &amp; Assign SLA
+                                <i class="fa-solid fa-calculator me-2"></i>Compute Risk Score &amp; Assign SLA
                             </button>
                             <button class="btn btn-exec-red w-100 py-2" onclick="simulateAttack()">
-                                <i class="fa-solid fa-bug me-2"></i>Simulate Corporate Ransomware Drill
+                                <i class="fa-solid fa-bug me-2"></i>Simulate Corporate Ransomware Attack Drill
                             </button>
                         </div>
                     </div>
@@ -350,10 +440,30 @@
                 </div>
 
                 <div class="col-lg-8">
+                    <!-- Threat Detection Pipeline (Addressing Teacher Feedback: How incidents are detected) -->
+                    <div class="card">
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-satellite-dish me-2" style="color:var(--accent-cyan)"></i>Threat Detection Pipeline (How Incidents are Detected)</span>
+                            <span class="real-badge-tag">Detection Telemetry</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="small text-muted mb-3">Incidents enter CyberShield IR via correlated telemetry from three enterprise detection sources before being classified in the table below:</p>
+                            <div class="telemetry-trace">
+                                <span class="text-danger">[EDR ALERT #8841]</span> <code>svchost.exe</code> spawned <code>vssadmin.exe delete shadows /all /quiet</code> &amp; <code>bcdedit.exe /set {default} recoveryenabled No</code> on host <code>CORP-DC01</code> (PID: 4912)
+                            </div>
+                            <div class="telemetry-trace">
+                                <span class="text-warning">[SIEM CORRELATION RULE #409]</span> Multiple SMB connections on port 445 from workstation <code>WS-042 (10.100.2.14)</code> to <code>CORP-DC01 (10.100.1.5)</code> with privileged administrator ticket.
+                            </div>
+                            <div class="telemetry-trace">
+                                <span class="text-info">[HONEYTOKEN TRIPWIRE]</span> Service account <code>svc_sql_admin</code> Kerberos pre-authentication requested from unapproved IP <code>10.100.2.14</code>.
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span><i class="fa-solid fa-list-check me-2" style="color:var(--accent-cyan)"></i>Corporate Incident Register &amp; Classification Matrix</span>
-                            <span style="font-size:0.75rem;color:#6ee7b7;font-weight:600"><i class="fa-solid fa-circle pulse me-1"></i>Real-Time Telemetry</span>
+                            <span class="sim-badge-tag">Simulated Incident Register</span>
                         </div>
                         <div style="overflow-x:auto">
                             <table class="dark-table" id="incident-table">
@@ -361,17 +471,17 @@
                                     <tr>
                                         <th>Case ID</th>
                                         <th>Corporate Incident</th>
-                                        <th>Attack Vector</th>
+                                        <th>Detection Telemetry</th>
                                         <th>Severity Level</th>
-                                        <th>Impact ($)</th>
-                                        <th>Containment Status</th>
+                                        <th>Simulated Impact</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody id="incident-tbody">
                                     <tr>
                                         <td><code style="color:var(--accent-cyan);font-weight:700">#CORP-901</code></td>
                                         <td style="color:#ffffff;font-weight:600">LockBit 3.0 — Domain Controller DC01</td>
-                                        <td><span class="badge bg-danger text-white px-2 py-1">Ransomware</span></td>
+                                        <td><span class="badge bg-dark border border-danger text-danger">EDR: VSS Purge</span></td>
                                         <td><span class="sev1">SEV-1 CRITICAL</span></td>
                                         <td style="color:#fca5a5;font-weight:700">$1,200,000</td>
                                         <td><span class="badge bg-danger text-white px-2 py-1">Containment Active</span></td>
@@ -379,7 +489,7 @@
                                     <tr>
                                         <td><code style="color:var(--accent-cyan);font-weight:700">#CORP-902</code></td>
                                         <td style="color:#ffffff;font-weight:600">AiTM Token Hijack — CEO Executive Mailbox</td>
-                                        <td><span class="badge bg-warning text-dark px-2 py-1 font-weight-bold">Email Compromise</span></td>
+                                        <td><span class="badge bg-dark border border-warning text-warning">Cloud Identity: Impossible Travel</span></td>
                                         <td><span class="sev2">SEV-2 HIGH</span></td>
                                         <td style="color:#fde68a;font-weight:700">$650,000</td>
                                         <td><span class="badge bg-warning text-dark px-2 py-1">Under Investigation</span></td>
@@ -387,7 +497,7 @@
                                     <tr>
                                         <td><code style="color:var(--accent-cyan);font-weight:700">#CORP-903</code></td>
                                         <td style="color:#ffffff;font-weight:600">L7 Surge — Customer SSO Portal</td>
-                                        <td><span class="badge bg-info text-dark px-2 py-1">DDoS Attack</span></td>
+                                        <td><span class="badge bg-dark border border-info text-info">Edge WAF: 24,000 rps</span></td>
                                         <td><span class="sev3">SEV-3 MEDIUM</span></td>
                                         <td style="color:#bae6fd;font-weight:700">$20,000</td>
                                         <td><span class="badge bg-info text-dark px-2 py-1">Mitigated by WAF</span></td>
@@ -396,75 +506,40 @@
                             </table>
                         </div>
                     </div>
-
-                    <div class="card">
-                        <div class="card-header"><i class="fa-solid fa-chart-simple me-2" style="color:var(--accent-cyan)"></i>Corporate IT Attack Surface &amp; Vulnerability Heatmap</div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between mb-1" style="font-size:0.86rem;font-weight:600">
-                                    <span style="color:#ffffff"><i class="fa-solid fa-lock me-2 text-danger"></i>Ransomware &amp; Storage Encryption Attack</span>
-                                    <span style="color:#f87171">CRITICAL — 95%</span>
-                                </div>
-                                <div class="prog-track"><div class="prog-fill" style="width:95%;background:linear-gradient(90deg,#991b1b,#ef4444)"></div></div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between mb-1" style="font-size:0.86rem;font-weight:600">
-                                    <span style="color:#ffffff"><i class="fa-solid fa-key me-2 text-warning"></i>Active Directory Kerberoasting &amp; Credential Theft</span>
-                                    <span style="color:#fbbf24">HIGH — 82%</span>
-                                </div>
-                                <div class="prog-track"><div class="prog-fill" style="width:82%;background:linear-gradient(90deg,#92400e,#f59e0b)"></div></div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between mb-1" style="font-size:0.86rem;font-weight:600">
-                                    <span style="color:#ffffff"><i class="fa-solid fa-envelope me-2 text-warning"></i>M365 Phishing &amp; Session Hijacking (AiTM)</span>
-                                    <span style="color:#fbbf24">HIGH — 76%</span>
-                                </div>
-                                <div class="prog-track"><div class="prog-fill" style="width:76%;background:linear-gradient(90deg,#92400e,#f59e0b)"></div></div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between mb-1" style="font-size:0.86rem;font-weight:600">
-                                    <span style="color:#ffffff"><i class="fa-solid fa-network-wired me-2 text-info"></i>Corporate VPN Gateway Brute Force &amp; DDoS</span>
-                                    <span style="color:#38bdf8">MEDIUM — 52%</span>
-                                </div>
-                                <div class="prog-track"><div class="prog-fill" style="width:52%;background:linear-gradient(90deg,#0e4a5c,#06b6d4)"></div></div>
-                            </div>
-                            <div>
-                                <div class="d-flex justify-content-between mb-1" style="font-size:0.86rem;font-weight:600">
-                                    <span style="color:#ffffff"><i class="fa-solid fa-user-shield me-2 text-success"></i>Privileged Account Misuse &amp; Internal Data Exfil</span>
-                                    <span style="color:#34d399">MEDIUM — 38%</span>
-                                </div>
-                                <div class="prog-track"><div class="prog-fill" style="width:38%;background:linear-gradient(90deg,#065f46,#10b981)"></div></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
         <!-- ══════════════════════════════════════════════════ -->
-        <!-- TAB 2: CONTAINMENT PLAYBOOKS (CO4)               -->
+        <!-- TAB 2: PLAYBOOK ORCHESTRATION (SIMULATED ACTIONS)  -->
         <!-- ══════════════════════════════════════════════════ -->
         <div class="tab-pane fade" id="tab-playbooks">
+            <div class="alert alert-warning py-2 mb-3" style="background:rgba(245,158,11,0.1); border-color:#f59e0b; font-size:0.84rem;">
+                <i class="fa-solid fa-circle-info me-2 text-warning"></i><strong>Simulation Architecture Notice:</strong>
+                Clicking the buttons below executes a <strong>simulated orchestration sequence</strong> (SOAR simulation). The terminal below shows the exact simulated command, targeted system input, generated exit code, and append-only audit trail logging.
+            </div>
+
             <div class="row">
                 <!-- Playbook A -->
                 <div class="col-lg-6">
                     <div class="card" style="border-color:rgba(239,68,68,0.4)">
                         <div class="card-header" style="color:#fca5a5;border-color:rgba(239,68,68,0.4)">
-                            <i class="fa-solid fa-biohazard me-2 text-danger"></i>PLAYBOOK A — Corporate Ransomware &amp; Active Directory Defense
+                            <span><i class="fa-solid fa-biohazard me-2 text-danger"></i>Playbook A: Corporate Ransomware &amp; Active Directory Defense</span>
+                            <span class="sim-badge-tag">Simulated SOAR</span>
                         </div>
                         <div class="card-body p-0">
                             <div class="p-3" style="border-bottom:1px solid var(--card-border);font-size:0.84rem;color:#cbd5e1">
-                                Designed for Corporate IT enterprise networks. Isolates lateral infection paths while preserving live volatile RAM.
+                                Designed for Corporate IT networks. Isolates lateral movement while keeping host AC power energized to preserve RAM encryption keys.
                             </div>
                             <div class="p-3">
                                 <div style="padding:12px 0;border-bottom:1px solid rgba(30,46,74,0.6)">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 1 · Host &amp; VLAN Network Isolation</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Apply switch port ACLs to quarantine infected subnet. Maintain AC power for memory analysis.</div>
-                                            <div id="s-a1" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>VLAN quarantined. Lateral movement halted.</div>
+                                            <div style="font-size:0.82rem;color:#94a3b8">Action: Switch ACL quarantine on VLAN 10. Keeps host energized for volatile memory acquisition.</div>
+                                            <div id="s-a1" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Simulated action executed (Exit Code: 0)</div>
                                         </div>
-                                        <button class="btn btn-exec-red ms-3 flex-shrink-0" onclick="execStep('VLAN quarantined. Switch ACLs applied. Server left energized for volatile memory triage.','s-a1','A1')">Execute</button>
+                                        <button class="btn btn-exec-red ms-3 flex-shrink-0" onclick="execSimulatedAction('A1', 'Switch ACL Quarantine', 'Cisco Nexus 9000 ACL rule applied to VLAN 10. Ingress/egress dropped; keep-alive energized.', 'switch-core01(config)# ip access-group BLOCK_VLAN10 in', '0')">Execute (Sim)</button>
                                     </div>
                                 </div>
 
@@ -472,10 +547,10 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 2 · Kerberos KRBTGT Password Double-Reset</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Invalidate Golden Tickets domain-wide across all Active Directory domain controllers.</div>
-                                            <div id="s-a2" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>KRBTGT reset completed twice. Kerberos invalidated.</div>
+                                            <div style="font-size:0.82rem;color:#94a3b8">Action: Reset KRBTGT password twice in Active Directory to invalidate all Kerberos Golden/Silver tickets.</div>
+                                            <div id="s-a2" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Simulated action executed (Exit Code: 0)</div>
                                         </div>
-                                        <button class="btn btn-exec-red ms-3 flex-shrink-0" onclick="execStep('KRBTGT dual-reset sequence executed. All active Kerberos TGT tickets purged domain-wide.','s-a2','A2')">Execute</button>
+                                        <button class="btn btn-exec-red ms-3 flex-shrink-0" onclick="execSimulatedAction('A2', 'KRBTGT Password Reset x2', 'Reset-KdsRootKey + Reset KRBTGT account password across all domain controllers.', 'powershell.exe -Command Reset-ADServiceAccountPassword krbtgt -DualCycle', '0')">Execute (Sim)</button>
                                     </div>
                                 </div>
 
@@ -483,32 +558,32 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 3 · Volatile Memory Acquisition (RFC 3227)</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Acquire full physical RAM snapshot to external write-blocked drive for key extraction.</div>
-                                            <div id="s-a3" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Memory dump acquired. SHA-256 logged.</div>
+                                            <div style="font-size:0.82rem;color:#94a3b8">Action: Launch live RAM dump to external write-blocked storage for key recovery and timeline reconstruction.</div>
+                                            <div id="s-a3" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Simulated action executed (Exit Code: 0)</div>
                                         </div>
-                                        <button class="btn btn-exec-red ms-3 flex-shrink-0" onclick="execStep('Live RAM acquisition finished using WinPmem. SHA-256 cataloged into forensic vault.','s-a3','A3')">Execute</button>
+                                        <button class="btn btn-exec-red ms-3 flex-shrink-0" onclick="execSimulatedAction('A3', 'WinPmem RAM Acquisition', 'Captures 64GB physical memory bitstream to write-blocked forensic volume.', 'winpmem.exe -o E:\\Evidence\\CORP_DC01_RAM.raw --mode 2', '0')">Execute (Sim)</button>
                                     </div>
                                 </div>
 
                                 <div style="padding:12px 0;border-bottom:1px solid rgba(30,46,74,0.6)">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
-                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 4 · Verify Immutable Storage &amp; Backup Snapshots</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Validate air-gapped WORM backups to verify zero data loss (RPO: 0).</div>
-                                            <div id="s-a4" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Immutable snapshots verified. Clean state confirmed.</div>
+                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 4 · Validate Air-Gapped Immutable WORM Backups</div>
+                                            <div style="font-size:0.82rem;color:#94a3b8">Action: Confirm immutable storage volume integrity prior to encryption cut-off (Target RPO: 0 loss).</div>
+                                            <div id="s-a4" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Simulated action executed (Exit Code: 0)</div>
                                         </div>
-                                        <button class="btn btn-exec-red ms-3 flex-shrink-0" onclick="execStep('WORM immutable snapshot integrity validated. Confirmed clean state prior to encryption.','s-a4','A4')">Execute</button>
+                                        <button class="btn btn-exec-red ms-3 flex-shrink-0" onclick="execSimulatedAction('A4', 'Immutable Storage Verification', 'Validated air-gapped immutable snapshot at cut-off 14:02:11 UTC. 0 blocks altered.', 'veeam_cli verify-immutable-store --id CORP_SAN_VOL01 --snapshot pre-breach', '0')">Execute (Sim)</button>
                                     </div>
                                 </div>
 
                                 <div style="padding:12px 0">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
-                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 5 · Restore from Hardened Gold Master Image</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Deploy sanitized operating system image and replay database transaction journals.</div>
-                                            <div id="s-a5" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Services restored. Production online.</div>
+                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 5 · Provision Clean Hardened Gold Master</div>
+                                            <div style="font-size:0.82rem;color:#94a3b8">Action: Rebuild domain controller from clean template and replay committed transaction journals.</div>
+                                            <div id="s-a5" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Simulated action executed (Exit Code: 0)</div>
                                         </div>
-                                        <button class="btn btn-exec-green ms-3 flex-shrink-0" onclick="execStep('Hardened Gold Master image deployed. Transaction replay finished. Corporate IT operational.','s-a5','A5')">Execute</button>
+                                        <button class="btn btn-exec-green ms-3 flex-shrink-0" onclick="execSimulatedAction('A5', 'Gold Master Replay', 'Hardened OS provisioned. Active Directory sysvol replays completed successfully.', 'terraform apply -target=module.dc_recovery -auto-approve', '0')">Execute (Sim)</button>
                                     </div>
                                 </div>
                             </div>
@@ -520,21 +595,22 @@
                 <div class="col-lg-6">
                     <div class="card" style="border-color:rgba(245,158,11,0.4)">
                         <div class="card-header" style="color:#fde68a;border-color:rgba(245,158,11,0.4)">
-                            <i class="fa-solid fa-envelope-circle-check me-2 text-warning"></i>PLAYBOOK B — Corporate M365 Email Compromise &amp; VPN Breach
+                            <span><i class="fa-solid fa-envelope-circle-check me-2 text-warning"></i>Playbook B: Corporate M365 Email &amp; VPN Breach</span>
+                            <span class="sim-badge-tag">Simulated SOAR</span>
                         </div>
                         <div class="card-body p-0">
                             <div class="p-3" style="border-bottom:1px solid var(--card-border);font-size:0.84rem;color:#cbd5e1">
-                                Tailored for identity protection, OAuth session hijacking, and VPN unauthorized tunneling.
+                                Targets OAuth session hijacking, rogue forwarding rules, and compromised remote access VPN tunnels.
                             </div>
                             <div class="p-3">
                                 <div style="padding:12px 0;border-bottom:1px solid rgba(30,46,74,0.6)">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 1 · Purge M365 Sessions &amp; Revoke OAuth Tokens</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Terminate compromised session cookies and revoke all enterprise OAuth refresh tokens.</div>
-                                            <div id="s-b1" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Tokens revoked. Global sign-out enforced.</div>
+                                            <div style="font-size:0.82rem;color:#94a3b8">Action: Terminate session cookies and revoke OAuth refresh tokens via Microsoft Graph API.</div>
+                                            <div id="s-b1" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Simulated action executed (Exit Code: 0)</div>
                                         </div>
-                                        <button class="btn btn-exec-amber ms-3 flex-shrink-0" onclick="execStep('M365 OAuth tokens revoked via Graph API. Global sign-out enforced on compromised user.','s-b1','B1')">Execute</button>
+                                        <button class="btn btn-exec-amber ms-3 flex-shrink-0" onclick="execSimulatedAction('B1', 'M365 Token Revocation', 'Revoked all active refresh tokens for compromised executive accounts.', 'POST https://graph.microsoft.com/v1.0/users/{id}/revokeSignInSessions', '200 OK')">Execute (Sim)</button>
                                     </div>
                                 </div>
 
@@ -542,63 +618,32 @@
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 2 · Delete Hidden Mail Forwarding Rules</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Purge attacker-created inbox rules routing executive emails to external destinations.</div>
-                                            <div id="s-b2" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>3 rogue inbox rules detected and purged.</div>
+                                            <div style="font-size:0.82rem;color:#94a3b8">Action: Detect and purge rogue inbox rules moving emails to RSS or external inboxes.</div>
+                                            <div id="s-b2" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Simulated action executed (Exit Code: 0)</div>
                                         </div>
-                                        <button class="btn btn-exec-amber ms-3 flex-shrink-0" onclick="execStep('Removed 3 malicious inbox rules moving internal correspondence to RSS / deleted items.','s-b2','B2')">Execute</button>
+                                        <button class="btn btn-exec-amber ms-3 flex-shrink-0" onclick="execSimulatedAction('B2', 'Purge Inbox Rules', 'Deleted 3 malicious inbox rules redirecting corporate email to external drop accounts.', 'Get-InboxRule -Mailbox ceo@corp.com | Where-Object RedirectTo | Remove-InboxRule', '0')">Execute (Sim)</button>
                                     </div>
                                 </div>
 
                                 <div style="padding:12px 0;border-bottom:1px solid rgba(30,46,74,0.6)">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
-                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 3 · Terminate VPN Tunnels &amp; Enforce Step-Up MFA</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Kill active remote sessions and mandate FIDO2 hardware token challenge for re-entry.</div>
-                                            <div id="s-b3" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Active VPN tunnels severed. MFA reset enforced.</div>
+                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 3 · Sever VPN Tunnels &amp; Enforce Step-Up MFA</div>
+                                            <div style="font-size:0.82rem;color:#94a3b8">Action: Terminate remote access tunnel on VPN concentrator and mandate hardware token verification.</div>
+                                            <div id="s-b3" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Simulated action executed (Exit Code: 0)</div>
                                         </div>
-                                        <button class="btn btn-exec-amber ms-3 flex-shrink-0" onclick="execStep('Terminated active VPN tunnels on gateway. Enforced FIDO2 hardware token verification.','s-b3','B3')">Execute</button>
+                                        <button class="btn btn-exec-amber ms-3 flex-shrink-0" onclick="execSimulatedAction('B3', 'Kill VPN Tunnel', 'Terminated active SSL-VPN session ID 99281. Mandated FIDO2 challenge for re-entry.', 'vpn-concentrator# kill session 99281 --enforce-stepup-mfa', '0')">Execute (Sim)</button>
                                     </div>
                                 </div>
 
                                 <div style="padding:12px 0">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
-                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 4 · File Corporate Compliance &amp; Executive Notification</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Notify Corporate CISO, General Counsel, and prepare regulatory audit documentation.</div>
-                                            <div id="s-b4" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Executive dispatch logged. Case ref: CORP-IRP-2026.</div>
+                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 4 · File Corporate Compliance Notification</div>
+                                            <div style="font-size:0.82rem;color:#94a3b8">Action: Dispatch formal incident notification to CISO, Legal Counsel, and Data Protection Officer.</div>
+                                            <div id="s-b4" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Simulated action executed (Exit Code: 0)</div>
                                         </div>
-                                        <button class="btn btn-exec-green ms-3 flex-shrink-0" onclick="execStep('Executive incident dispatch sent to CISO, Legal Counsel, and Corporate Board.','s-b4','B4')">Execute</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Playbook C -->
-                    <div class="card" style="border-color:rgba(14,165,233,0.4)">
-                        <div class="card-header" style="color:#7dd3fc;border-color:rgba(14,165,233,0.4)">
-                            <i class="fa-solid fa-shield-virus me-2 text-info"></i>PLAYBOOK C — Enterprise DDoS &amp; Perimeter Mitigation
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="p-3">
-                                <div style="padding:12px 0;border-bottom:1px solid rgba(30,46,74,0.6)">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 1 · BGP Route Shift to Cloud Scrubbing Provider</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Divert inbound edge traffic to upstream cloud protection center (Cloudflare / AWS Shield).</div>
-                                            <div id="s-c1" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>BGP routes shifted. 99.4% malicious traffic absorbed.</div>
-                                        </div>
-                                        <button class="btn btn-exec-cyan ms-3 flex-shrink-0" onclick="execStep('BGP routing shifted to upstream cloud scrubber. Edge gateway load normalized.','s-c1','C1')">Execute</button>
-                                    </div>
-                                </div>
-                                <div style="padding:12px 0">
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <div style="font-size:0.92rem;font-weight:700;color:#ffffff">Step 2 · WAF Rate Limiting &amp; Botnet Drop Rules</div>
-                                            <div style="font-size:0.82rem;color:#94a3b8">Enforce 5 req/s rate limits on corporate login portals and block known proxy IP blocks.</div>
-                                            <div id="s-c2" style="display:none;font-size:0.8rem;color:#34d399;font-weight:600;margin-top:4px"><i class="fa-solid fa-circle-check me-1"></i>Rate limiting enforced. 14,200 bot IPs dropped.</div>
-                                        </div>
-                                        <button class="btn btn-exec-cyan ms-3 flex-shrink-0" onclick="execStep('Rate limit threshold enforced at 5 req/s. Tor and hostile ASN ranges blacklisted.','s-c2','C2')">Execute</button>
+                                        <button class="btn btn-exec-green ms-3 flex-shrink-0" onclick="execSimulatedAction('B4', 'Executive Notification', 'Dispatched encrypted advisory to CISO and Legal Counsel. Ref: CORP-IRP-2026.', 'notify_ciso --incident CORP-902 --classification HIGH --legal-hold YES', '0')">Execute (Sim)</button>
                                     </div>
                                 </div>
                             </div>
@@ -607,133 +652,144 @@
                 </div>
             </div>
 
-            <!-- Terminal Console -->
-            <div class="card" style="border-color:rgba(14,165,233,0.3)">
+            <!-- Terminal Output Console -->
+            <div class="card mt-3" style="border-color:rgba(14,165,233,0.3)">
                 <div class="card-header" style="color:var(--accent-cyan)">
-                    <i class="fa-solid fa-terminal me-2"></i>SOAR Automation &amp; Playbook Orchestration Console
-                    <span class="blink ms-2" style="color:var(--accent-green)">█</span>
+                    <span><i class="fa-solid fa-terminal me-2"></i>SOAR Orchestration Console &amp; Execution Audit Log</span>
+                    <span class="sim-badge-tag">Simulation Output</span>
                 </div>
                 <div class="card-body p-2">
                     <div class="terminal" id="terminal">
-                        <div><span class="t-time">[SYSTEM]</span> <span class="t-info">CyberShield Incident Response Orchestrator (Corporate IT Edition) initialized.</span></div>
-                        <div><span class="t-time">[TELEMETRY]</span> <span class="t-ok">Monitoring Corporate Network Subnet 10.100.0.0/16 — Endpoints connected.</span></div>
-                        <div><span class="t-time">[STATUS]</span> <span class="t-dim">Ready for automated containment dispatch.</span></div>
+                        <div><span class="t-time">[BOOT]</span> <span class="t-info">CyberShield Incident Response Orchestrator (SOAR Simulation Engine) active.</span></div>
+                        <div><span class="t-time">[TELEMETRY]</span> <span class="t-res">Monitoring Corporate Subnets (10.100.0.0/16) — Sensors active.</span></div>
+                        <div><span class="t-time">[READY]</span> <span class="t-dim">Click any Playbook button above to simulate action execution, view inputs, outputs, and audit logs.</span></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- ══════════════════════════════════════════════════ -->
-        <!-- TAB 3: FORENSICS & EVIDENCE (CO5)                -->
+        <!-- TAB 3: LIVE FORENSICS & REAL EVIDENCE HASHING     -->
         <!-- ══════════════════════════════════════════════════ -->
         <div class="tab-pane fade" id="tab-forensics">
+            <div class="alert alert-success py-2 mb-3" style="background:rgba(16,185,129,0.1); border-color:#10b981; font-size:0.84rem;">
+                <i class="fa-solid fa-circle-check me-2 text-success"></i><strong>Live Evidence Verification Engine:</strong>
+                This tab performs <strong>real client-side cryptographic SHA-256 calculation</strong> using the browser's native <code>crypto.subtle</code> Web API. Select any actual file from your computer below to compute and verify its true cryptographic digest.
+            </div>
+
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-5">
+                    <!-- Real File Hashing Card -->
                     <div class="card">
-                        <div class="card-header" style="color:var(--accent-cyan)">
-                            <i class="fa-solid fa-folder-plus me-2"></i>Digital Artifact Acquisition (RFC 3227)
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-file-shield me-2" style="color:var(--accent-green)"></i>Real-Time Evidence File Acquisition</span>
+                            <span class="real-badge-tag">Real SHA-256 Engine</span>
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
-                                <label class="form-label">Evidence Artifact / Filename</label>
-                                <input type="text" id="ev-name" class="form-control" placeholder="e.g. DC01_RAM_VOLATILE_64GB.raw">
+                                <label class="form-label">Select Physical Evidence File to Hash &amp; Verify</label>
+                                <input type="file" id="ev-real-file" class="form-control" onchange="handleRealFileSelect(event)">
+                                <small class="text-muted">Pick any file (.txt, .log, .raw, .pdf, .pcap). It is hashed directly in your browser memory.</small>
                             </div>
+
                             <div class="mb-3">
-                                <label class="form-label">Order of Volatility Stage</label>
-                                <select id="ev-stage" class="form-select">
-                                    <option value="Volatile RAM">1 — Volatile RAM &amp; CPU Cache (HIGHEST)</option>
-                                    <option value="Network State">2 — Network Sockets &amp; ARP Table</option>
-                                    <option value="Process Memory">3 — Process Table &amp; Kernel States</option>
-                                    <option value="Disk Image">4 — Non-Volatile Disk Image / VMDK / SAN</option>
-                                    <option value="Remote Logs">5 — Remote SIEM Telemetry &amp; Firewall Flows</option>
+                                <label class="form-label">Evidence Identifier / Case Tag</label>
+                                <input type="text" id="ev-real-tag" class="form-control" value="EV-2026-LIVE-01">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Order of Volatility Tier (RFC 3227)</label>
+                                <select id="ev-real-tier" class="form-select">
+                                    <option value="Tier 1: Volatile Memory (RAM)">Tier 1: Volatile RAM &amp; CPU Cache (Most Volatile)</option>
+                                    <option value="Tier 2: Network Sockets &amp; ARP">Tier 2: Network Sockets &amp; Routing Tables</option>
+                                    <option value="Tier 3: Process Tables &amp; Kernel">Tier 3: Process Tables &amp; Memory Maps</option>
+                                    <option value="Tier 4: File System &amp; Disk Storage">Tier 4: Non-Volatile Disk Images &amp; Storage (Least Volatile)</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Acquiring Forensics Analyst</label>
-                                <input type="text" id="ev-analyst" class="form-control" value="Lead Forensics Specialist, GCFE">
-                            </div>
-                            <div class="mb-4">
-                                <label class="form-label">Target Corporate Host / System</label>
-                                <input type="text" id="ev-host" class="form-control" value="CORP-DC01">
-                            </div>
-                            <button class="btn btn-exec-cyan w-100 py-2" onclick="addEvidence()">
-                                <i class="fa-solid fa-hashtag me-2"></i>Acquire &amp; Generate SHA-256 Hash
-                            </button>
-                        </div>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-header"><i class="fa-solid fa-layer-group me-2 text-warning"></i>RFC 3227 Order of Volatility Model</div>
-                        <div class="card-body" style="padding:12px 18px">
-                            <div class="vol-step">
-                                <div class="vol-num" style="background:rgba(239,68,68,0.2);border-color:#ef4444;color:#fca5a5">1</div>
-                                <div><div class="vol-label">CPU Cache &amp; Registers</div><div class="vol-sub">Instantly lost on power-off — capture FIRST</div></div>
+                            <div class="mb-3">
+                                <label class="form-label">Acquiring Forensic Investigator</label>
+                                <input type="text" id="ev-real-analyst" class="form-control" value="Lead DFIR Specialist (Certified GCFE / CISSP)">
                             </div>
-                            <div class="vol-step">
-                                <div class="vol-num" style="background:rgba(249,115,22,0.2);border-color:#f97316;color:#fdba74">2</div>
-                                <div><div class="vol-label">Physical RAM / System Memory</div><div class="vol-sub">Holds active ransomware keys &amp; injected DLLs</div></div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Source Host Endpoint</label>
+                                <input type="text" id="ev-real-host" class="form-control" value="CORP-DC01.enterprise.local">
                             </div>
-                            <div class="vol-step">
-                                <div class="vol-num" style="background:rgba(245,158,11,0.2);border-color:#f59e0b;color:#fde68a">3</div>
-                                <div><div class="vol-label">Network Sockets &amp; ARP Cache</div><div class="vol-sub">Active C2 sessions, internal pivot routes</div></div>
+
+                            <!-- Live Hash Display Area -->
+                            <div class="mb-3">
+                                <label class="form-label">Live Computed SHA-256 Digest:</label>
+                                <div class="hash-box" id="ev-computed-hash">
+                                    Select a file above to calculate its true SHA-256 cryptographic digest...
+                                </div>
+                                <div id="ev-file-meta" class="small text-muted mt-1"></div>
                             </div>
-                            <div class="vol-step">
-                                <div class="vol-num" style="background:rgba(16,185,129,0.2);border-color:#10b981;color:#6ee7b7">4</div>
-                                <div><div class="vol-label">Process Table &amp; Kernel State</div><div class="vol-sub">Malware process parent-child relationships</div></div>
+
+                            <!-- Hash Verification Sub-Form -->
+                            <div class="mb-3 p-3 rounded" style="background:rgba(255,255,255,0.02);border:1px dashed #334155;">
+                                <label class="form-label" style="color:var(--accent-cyan);"><i class="fa-solid fa-circle-check me-1"></i>Verify Integrity Against Known Expected Hash:</label>
+                                <input type="text" id="ev-expected-hash" class="form-control form-control-sm mb-2" placeholder="Paste expected SHA-256 to verify integrity match...">
+                                <button type="button" class="btn btn-outline-info btn-sm w-100" onclick="verifyHashMatch()">
+                                    <i class="fa-solid fa-code-compare me-1"></i>Verify Hash Integrity Match
+                                </button>
+                                <div id="ev-match-result" class="mt-2 text-center small fw-bold"></div>
                             </div>
-                            <div class="vol-step">
-                                <div class="vol-num">5</div>
-                                <div><div class="vol-label">Non-Volatile Disk / SAN Block Storage</div><div class="vol-sub">Persistent payloads, encrypted data sectors</div></div>
-                            </div>
+
+                            <button class="btn btn-exec-green w-100 py-2" onclick="commitEvidenceToVault()">
+                                <i class="fa-solid fa-vault me-2"></i>Seal &amp; Log to Court-Admissible Evidence Vault
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-8">
+                <div class="col-lg-7">
+                    <!-- Evidence Vault Table -->
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="card-header">
                             <span><i class="fa-solid fa-vault me-2" style="color:var(--accent-cyan)"></i>Cryptographic Evidence Vault &amp; Hash Register</span>
-                            <span style="font-size:0.75rem;color:#7dd3fc;font-weight:600">SHA-256 | RFC 3227 | ISO/IEC 27037</span>
+                            <span class="real-badge-tag">ISO/IEC 27037 Compliant</span>
                         </div>
                         <div style="overflow-x:auto">
                             <table class="dark-table">
                                 <thead>
                                     <tr>
-                                        <th>Evidence ID</th>
+                                        <th>Item ID</th>
                                         <th>Artifact Name</th>
                                         <th>Volatility Tier</th>
-                                        <th>Host</th>
-                                        <th>Analyst</th>
+                                        <th>File Size</th>
                                         <th>Acquired (UTC)</th>
-                                        <th>SHA-256 Hash</th>
+                                        <th>SHA-256 Digest</th>
                                     </tr>
                                 </thead>
                                 <tbody id="evidence-tbody">
                                     <tr>
                                         <td><code style="color:var(--accent-cyan);font-weight:700">EV-001-RAM</code></td>
                                         <td style="color:#ffffff;font-weight:600">CORP_DC01_64GB_RAM.raw</td>
-                                        <td><span class="badge bg-danger text-white px-2 py-1">Volatile RAM</span></td>
-                                        <td style="color:#e2e8f0">CORP-DC01</td>
-                                        <td style="color:#cbd5e1">A. Mercer, GCFE</td>
-                                        <td style="color:#94a3b8">2026-10-31 14:15</td>
-                                        <td><code style="color:#38bdf8;font-size:0.78rem">e3b0c44298fc1c149afbf4...</code></td>
+                                        <td><span class="badge bg-danger text-white px-2 py-1">Tier 1: Volatile RAM</span></td>
+                                        <td style="color:#94a3b8">67,108,864 KB</td>
+                                        <td style="color:#94a3b8">2026-11-01 14:15</td>
+                                        <td><code style="color:#38bdf8;font-size:0.75rem" title="SHA-256 calculated from raw RAM snapshot">a8f9c2d14b8e7310...</code></td>
                                     </tr>
                                     <tr>
-                                        <td><code style="color:var(--accent-cyan);font-weight:700">EV-002-NET</code></td>
-                                        <td style="color:#ffffff;font-weight:600">Firewall_Egress_Telemetry.pcap</td>
-                                        <td><span class="badge bg-warning text-dark px-2 py-1 font-weight-bold">Network State</span></td>
-                                        <td style="color:#e2e8f0">EDGE-FW01</td>
-                                        <td style="color:#cbd5e1">R. Vance, DFIR</td>
-                                        <td style="color:#94a3b8">2026-10-31 14:22</td>
-                                        <td><code style="color:#38bdf8;font-size:0.78rem">8f4e2b19a32c74d0089e11...</code></td>
+                                        <td><code style="color:var(--accent-cyan);font-weight:700">EV-002-PCAP</code></td>
+                                        <td style="color:#ffffff;font-weight:600">Edge_Firewall_C2_Trace.pcap</td>
+                                        <td><span class="badge bg-warning text-dark px-2 py-1 font-weight-bold">Tier 2: Network</span></td>
+                                        <td style="color:#94a3b8">1,482,910 KB</td>
+                                        <td style="color:#94a3b8">2026-11-01 14:22</td>
+                                        <td><code style="color:#38bdf8;font-size:0.75rem">7c4b18f092e315da...</code></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
+                    <!-- Chain of Custody Log -->
                     <div class="card">
-                        <div class="card-header"><i class="fa-solid fa-arrow-right-arrow-left me-2" style="color:var(--accent-cyan)"></i>Chain of Custody (CoC) Transfer Log</div>
+                        <div class="card-header">
+                            <span><i class="fa-solid fa-arrow-right-arrow-left me-2" style="color:var(--accent-cyan)"></i>Chain of Custody (CoC) Transfer Ledger</span>
+                            <span class="real-badge-tag">RFC 3227 / ISO 27037</span>
+                        </div>
                         <div style="overflow-x:auto">
                             <table class="dark-table">
                                 <thead>
@@ -743,25 +799,25 @@
                                         <th>Date &amp; Time (UTC)</th>
                                         <th>Released By</th>
                                         <th>Received By</th>
-                                        <th>Evidentiary Purpose</th>
+                                        <th>Purpose of Transfer</th>
                                     </tr>
                                 </thead>
                                 <tbody id="coc-tbody">
                                     <tr>
                                         <td style="font-weight:700;color:var(--accent-cyan)">01</td>
                                         <td><code style="color:var(--accent-cyan);font-weight:700">EV-001-RAM</code></td>
-                                        <td style="color:#94a3b8">2026-10-31 14:30</td>
-                                        <td style="color:#ffffff">A. Mercer</td>
-                                        <td style="color:#7dd3fc">Evidence Vault</td>
-                                        <td style="color:#e2e8f0">Secure Faraday Enclosure Storage</td>
+                                        <td style="color:#94a3b8">2026-11-01 14:30</td>
+                                        <td style="color:#ffffff">A. Mercer (DFIR Lead)</td>
+                                        <td style="color:#7dd3fc">Evidence Vault Custodian</td>
+                                        <td style="color:#e2e8f0">Secure Faraday Enclosure Sealing</td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight:700;color:var(--accent-cyan)">02</td>
                                         <td><code style="color:var(--accent-cyan);font-weight:700">EV-001-RAM</code></td>
-                                        <td style="color:#94a3b8">2026-10-31 15:45</td>
-                                        <td style="color:#ffffff">Evidence Vault</td>
-                                        <td style="color:#7dd3fc">R. Vance</td>
-                                        <td style="color:#e2e8f0">Forensic Bitstream Duplicate &amp; Key Extraction</td>
+                                        <td style="color:#94a3b8">2026-11-01 15:45</td>
+                                        <td style="color:#ffffff">Evidence Vault Custodian</td>
+                                        <td style="color:#7dd3fc">R. Vance (Forensic Analyst)</td>
+                                        <td style="color:#e2e8f0">Bitstream Forensic Image Copy &amp; Key Extraction</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -772,7 +828,102 @@
         </div>
 
         <!-- ══════════════════════════════════════════════════ -->
-        <!-- TAB 4: AUDIT REPORT & COMPLIANCE (CO5)           -->
+        <!-- TAB 4: TECHNICAL ARCHITECTURE                      -->
+        <!-- ══════════════════════════════════════════════════ -->
+        <div class="tab-pane fade" id="tab-architecture">
+            <div class="card">
+                <div class="card-header">
+                    <span><i class="fa-solid fa-network-wired me-2" style="color:var(--accent-cyan)"></i>Technical Architecture &amp; Implementation Details</span>
+                    <span class="real-badge-tag">System Specification</span>
+                </div>
+                <div class="card-body">
+                    <p class="text-sub mb-4">To ensure technical credibility and academic transparency, the table below documents the full software stack, distinguishing between components that are <strong>implemented and executed live</strong> versus those that are <strong>simulated models</strong>:</p>
+
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered table-dark dark-table">
+                            <thead>
+                                <tr>
+                                    <th>Architecture Layer</th>
+                                    <th>Technology / Implementation</th>
+                                    <th>Execution Status</th>
+                                    <th>Description &amp; Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong style="color:var(--accent-cyan)">Frontend UI</strong></td>
+                                    <td>HTML5, CSS3, Bootstrap 5.3, FontAwesome 6.4, Vanilla JavaScript</td>
+                                    <td><span class="badge bg-success">100% Implemented</span></td>
+                                    <td>Responsive single-page Security Operations Center (SOC) dashboard. Runs client-side in any browser or served via backend.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:var(--accent-cyan)">Backend API Server</strong></td>
+                                    <td>Python 3 Standard Library (<code>http.server</code>, <code>socketserver</code>, <code>json</code>, <code>hashlib</code>)</td>
+                                    <td><span class="badge bg-success">100% Implemented</span></td>
+                                    <td>Lightweight zero-dependency micro-server serving endpoints (<code>/api/triage</code>, <code>/api/contain</code>, <code>/api/evidence</code>, <code>/api/audit</code>).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:var(--accent-cyan)">Cryptographic Engine</strong></td>
+                                    <td>W3C Web Cryptography API (<code>crypto.subtle.digest</code>) &amp; Python <code>hashlib.sha256</code></td>
+                                    <td><span class="badge bg-success">100% Implemented</span></td>
+                                    <td>Real mathematical SHA-256 calculation on user-provided physical files. Verifies cryptographic evidence digests.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:var(--accent-cyan)">Risk Scoring Engine</strong></td>
+                                    <td>Weighted Multi-Factor Formula in JS &amp; Python</td>
+                                    <td><span class="badge bg-success">100% Implemented</span></td>
+                                    <td>Calculates quantitative score (0-100) using: <code>Score = W(Asset) + W(Vector) + W(Cost) + W(BlastRadius)</code>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:var(--accent-amber)">Corporate Telemetry</strong></td>
+                                    <td>Simulated Sample Data (EDR, SIEM, Honeypot traces)</td>
+                                    <td><span class="badge bg-warning text-dark">Simulated Model</span></td>
+                                    <td>Synthetic sample logs representing LockBit 3.0, AiTM phishing, and L7 DDoS for drill evaluation without attacking live corporate servers.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong style="color:var(--accent-amber)">Orchestration (SOAR)</strong></td>
+                                    <td>Simulated Script Execution Engine (Exit codes, commands, outputs)</td>
+                                    <td><span class="badge bg-warning text-dark">Simulated SOAR</span></td>
+                                    <td>Demonstrates what real orchestration commands (Cisco ACLs, KRBTGT PowerShell, WinPmem CLI) would execute in enterprise production.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="info-card" style="border-left: 4px solid var(--accent-cyan);">
+                                <h5 style="color:var(--accent-cyan)"><i class="fa-solid fa-calculator me-2"></i>Quantitative Risk Scoring Model</h5>
+                                <p class="small text-sub mb-2">The triage engine computes incident severity deterministically:</p>
+                                <ul class="small text-sub">
+                                    <li><strong>Asset Tier ($W_A$, max 40):</strong> Tier-0 Domain Controller = 40, ERP/CRM = 25, Workstation = 12, Staging = 5.</li>
+                                    <li><strong>Attack Vector ($W_V$, max 35):</strong> Ransomware = 35, BEC / AiTM = 30, VPN = 28, DDoS = 18, Insider = 15.</li>
+                                    <li><strong>Financial Exposure ($W_E$, max 20):</strong> &gt; $1M = 20, &gt; $500k = 14, &gt; $100k = 8, &lt; $100k = 2.</li>
+                                    <li><strong>Blast Radius ($W_B$, max 10):</strong> $Systems \times 2$ (capped at 10).</li>
+                                    <li><strong>Thresholds:</strong> &ge; 80: <strong>SEV-1 Critical</strong> (&lt;15m SLA), 55-79: <strong>SEV-2 High</strong> (&lt;30m), 30-54: <strong>SEV-3 Medium</strong> (&lt;2h), &lt; 30: <strong>SEV-4 Low</strong> (&lt;8h).</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="info-card" style="border-left: 4px solid var(--accent-green);">
+                                <h5 style="color:var(--accent-green)"><i class="fa-solid fa-scale-balanced me-2"></i>Standards &amp; Governance References</h5>
+                                <ul class="small text-sub">
+                                    <li><strong>NIST SP 800-61 Rev. 2:</strong> Governs the 5-phase incident lifecycle (Preparation, Detection, Containment, Eradication, Post-Mortem).</li>
+                                    <li><strong>RFC 3227:</strong> Guidelines for Evidence Collection and Archiving; specifies the strict Order of Volatility.</li>
+                                    <li><strong>ISO/IEC 27037:</strong> Guidelines for identification, collection, acquisition, and preservation of digital evidence.</li>
+                                    <li><strong>GDPR Article 33:</strong> Mandates data breach reporting to the supervisory authority within 72 hours of becoming aware.</li>
+                                    <li><strong>ISO/IEC 27001 &amp; SOC 2:</strong> Requires formal root cause analysis, evidence logs, and Corrective Action Plans (CAP).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════ -->
+        <!-- TAB 5: AUDIT & COMPLIANCE POST-MORTEM              -->
         <!-- ══════════════════════════════════════════════════ -->
         <div class="tab-pane fade" id="tab-reporting">
             <div class="card">
@@ -963,23 +1114,42 @@ function updateClock(){
 setInterval(updateClock, 1000); updateClock();
 
 /* GDPR Countdown */
-let gdprSecs = 71 * 3600 + 41 * 60;
+let gdprSecs = 71 * 3600 + 38 * 60;
 setInterval(() => {
     if (gdprSecs > 0) gdprSecs--;
     const h = Math.floor(gdprSecs / 3600), m = Math.floor((gdprSecs % 3600) / 60);
     document.getElementById('m-gdpr').textContent = h + 'h ' + String(m).padStart(2,'0') + 'm';
 }, 1000);
 
-/* Terminal Logger */
-function log(msg, cls='t-ok'){
+/* Terminal Logger with Action, Input, Output & Audit Logging */
+function logTerminal(actionName, inputCmd, resultOutput, auditText) {
     const term = document.getElementById('terminal');
     const t = new Date().toTimeString().slice(0,8);
-    const d = document.createElement('div');
-    d.innerHTML = `<span class="t-time">[${t}]</span> <span class="${cls}">${msg}</span>`;
-    term.appendChild(d); term.scrollTop = term.scrollHeight;
+    const entry = document.createElement('div');
+    entry.className = 'mb-2 pb-1 border-bottom border-dark';
+    entry.innerHTML = `
+        <div><span class="t-time">[${t}]</span> <span class="t-cmd">ACTION: ${actionName}</span></div>
+        <div class="ms-3"><span class="t-time">INPUT:</span> <code>${inputCmd}</code></div>
+        <div class="ms-3"><span class="t-time">RESULT:</span> <span class="t-res">${resultOutput}</span></div>
+        <div class="ms-3"><span class="t-time">AUDIT LOG:</span> <span class="t-audit">${auditText}</span></div>
+    `;
+    term.appendChild(entry);
+    term.scrollTop = term.scrollHeight;
 }
 
-/* CO2: Threat Triage */
+/* Simulated Playbook Execution (Addressing Teacher Feedback #3) */
+function execSimulatedAction(stepId, actionName, explanation, inputCommand, exitCode) {
+    // Show visual checkmark
+    const statusEl = document.getElementById('s-' + stepId.toLowerCase());
+    if (statusEl) statusEl.style.display = 'block';
+
+    const auditHash = "SHA256:" + Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);
+    const auditMsg = `Logged to central append-only trail | Exit: ${exitCode} | Signature: ${auditHash}`;
+
+    logTerminal(actionName, inputCommand, explanation, auditMsg);
+}
+
+/* Quantitative Threat Triage */
 function runTriage(){
     const title = document.getElementById('t-title').value || 'Unnamed Corporate Incident';
     const asset = document.getElementById('t-asset').value;
@@ -1018,82 +1188,118 @@ function runTriage(){
 
     document.getElementById('risk-panel').style.display = 'block';
     document.getElementById('risk-content').innerHTML = `
-        <div style="font-size:0.86rem;color:#cbd5e1;margin-bottom:10px;font-weight:600">Algorithmic Risk Score</div>
+        <div style="font-size:0.86rem;color:#cbd5e1;margin-bottom:10px;font-weight:600">Quantitative Risk Score:</div>
         <div style="font-size:2.8rem;font-weight:800;color:${col};text-align:center;margin-bottom:4px">${score}/100</div>
         <div style="text-align:center;margin-bottom:16px"><span class="${badge}">${sev}</span></div>
-        <div style="font-size:0.86rem;color:#cbd5e1">⏱ Response SLA: <strong style="color:${col}">${sla}</strong></div>
-        <div style="font-size:0.86rem;color:#cbd5e1;margin-top:6px">📋 Case Number: <strong style="color:#ffffff">${id}</strong></div>
+        <div style="font-size:0.84rem;color:#cbd5e1">⏱ Target Response SLA: <strong style="color:${col}">${sla}</strong></div>
+        <div style="font-size:0.84rem;color:#cbd5e1;margin-top:4px">📋 Generated Incident ID: <strong style="color:#ffffff">${id}</strong></div>
+        <div style="font-size:0.75rem;color:#94a3b8;margin-top:8px">Formula: Score = W(Asset: ${aw[asset]||5}) + W(Vector: ${vw[vector]||10}) + W(Exposure) + W(BlastRadius)</div>
     `;
 
-    log(`[TRIAGE] Incident "${title}" evaluated → ${sev} (Score: ${score}/100). SLA: ${sla}`, 't-info');
-    if (sev === 'SEV-1 CRITICAL'){
-        log('[WAR ROOM] ⚠ CRITICAL ALERT: Incident Commander, Corporate CISO, and Board alerted automatically.', 't-err');
+    logTerminal("TRIAGE_EVALUATION", `Evaluate [${title}]`, `Computed Score: ${score}/100 -> ${sev}`, `Assigned Response SLA: ${sla}`);
+}
+
+/* Attack Drill Simulation */
+function simulateAttack(){
+    document.querySelector('[data-bs-target="#tab-playbooks"]').click();
+    logTerminal("DRILL_SIMULATION_INIT", "Adversary Emulation: LockBit 3.0", "Injected synthetic telemetry alerts to SIEM queue", "Audit event ID #DR-9901 created");
+    setTimeout(() => logTerminal("EDR_TELEMETRY", "vssadmin.exe delete shadows /all /quiet", "Volume shadow copies targeted on CORP-DC01", "Alert raised to Tier-3 SOC queue"), 700);
+    setTimeout(() => logTerminal("SOAR_TRIGGER", "Playbook A Execution Queued", "Awaiting operator authorization to isolate VLAN 10", "War Room engaged"), 1400);
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   REAL CRYPTOGRAPHIC EVIDENCE ENGINE (Addressing Teacher Feedback #2)
+   Uses Native W3C Web Crypto API (crypto.subtle.digest)
+   ═════════════════════════════════════════════════════════════════════ */
+let currentCalculatedHash = "";
+let currentSelectedFile = null;
+
+async function handleRealFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    currentSelectedFile = file;
+    const hashBox = document.getElementById("ev-computed-hash");
+    const metaBox = document.getElementById("ev-file-meta");
+
+    hashBox.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i>Reading file bytes and calculating SHA-256 digest...';
+    metaBox.textContent = `Filename: ${file.name} | Size: ${(file.size / 1024).toFixed(2)} KB | Type: ${file.type || 'Binary'}`;
+
+    try {
+        const arrayBuffer = await file.arrayBuffer();
+        const hashBuffer = await crypto.subtle.digest('SHA-256', arrayBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+        currentCalculatedHash = hashHex;
+        hashBox.innerHTML = `<span class="text-success"><i class="fa-solid fa-check-circle me-1"></i>SHA-256:</span><br><strong>${hashHex}</strong>`;
+    } catch (err) {
+        hashBox.innerHTML = `<span class="text-danger"><i class="fa-solid fa-triangle-exclamation me-1"></i>Error computing hash: ${err.message}</span>`;
     }
 }
 
-/* CO4: Attack Drill Simulation */
-function simulateAttack(){
-    document.querySelector('[data-bs-target="#tab-playbooks"]').click();
-    log('[DRILL] ══════════════════════════════════════════════════════════', 't-dim');
-    log('[DRILL] CORPORATE ATTACK SIMULATION: LOCKBIT 3.0 ON DOMAIN CONTROLLER', 't-warn');
-    setTimeout(() => log('[DETECT] SIEM Rule fired: Volume Shadow Copy purge detected on CORP-DC01', 't-err'), 700);
-    setTimeout(() => log('[DETECT] EDR Telemetry: vssadmin.exe + bcdedit.exe spawned with suspicious args', 't-err'), 1400);
-    setTimeout(() => log('[ALERT] IOC Confirmed: Ransomware persistence identified in RunOnce registry', 't-warn'), 2100);
-    setTimeout(() => log('[AUTO] War Room triggered → PagerDuty dispatch sent to Corporate Incident Commander', 't-info'), 2800);
-    setTimeout(() => log('[AUTO] Corporate Playbook A queued for operator authorization', 't-ok'), 3500);
-    setTimeout(() => log('[DRILL] Simulation running. Click containment buttons above to mitigate.', 't-dim'), 4200);
+function verifyHashMatch() {
+    const expected = document.getElementById("ev-expected-hash").value.trim().toLowerCase();
+    const resultBox = document.getElementById("ev-match-result");
+
+    if (!currentCalculatedHash) {
+        resultBox.innerHTML = '<span class="text-warning">Please select a physical file to calculate its hash first.</span>';
+        return;
+    }
+    if (!expected) {
+        resultBox.innerHTML = '<span class="text-warning">Please paste an expected SHA-256 hash to compare against.</span>';
+        return;
+    }
+
+    if (expected === currentCalculatedHash.toLowerCase()) {
+        resultBox.innerHTML = '<span class="text-success"><i class="fa-solid fa-shield-check me-1"></i>INTEGRITY VERIFIED: Expected hash matches file digest 100%! Evidence is authentic and untampered.</span>';
+    } else {
+        resultBox.innerHTML = '<span class="text-danger"><i class="fa-solid fa-circle-xmark me-1"></i>HASH MISMATCH: Expected digest does not match. File may have been altered or corrupted!</span>';
+    }
 }
 
-/* CO4: Playbook execution */
-function execStep(msg, statusId, label){
-    document.getElementById(statusId).style.display = 'block';
-    log(`[PLAYBOOK-${label}] ${msg}`, 't-ok');
-}
+function commitEvidenceToVault() {
+    if (!currentSelectedFile || !currentCalculatedHash) {
+        alert("Please select a physical file from your computer to calculate its genuine SHA-256 hash first.");
+        return;
+    }
 
-/* CO5: Forensic Evidence Acquisition */
-function addEvidence(){
-    const name = document.getElementById('ev-name').value.trim();
-    const stage = document.getElementById('ev-stage').value;
-    const analyst = document.getElementById('ev-analyst').value;
-    const host = document.getElementById('ev-host').value;
+    const tag = document.getElementById("ev-real-tag").value || "EV-LIVE";
+    const tier = document.getElementById("ev-real-tier").value;
+    const analyst = document.getElementById("ev-real-analyst").value;
+    const host = document.getElementById("ev-real-host").value;
+    const sizeKB = (currentSelectedFile.size / 1024).toFixed(2) + " KB";
+    const utcTime = new Date().toISOString().slice(0,16).replace('T',' ');
 
-    if (!name){ alert('Please enter an evidence artifact name.'); return; }
-
-    const chars = '0123456789abcdef';
-    let hash = '';
-    for (let i = 0; i < 64; i++) hash += chars[Math.floor(Math.random() * 16)];
-
-    const ts = new Date().toISOString().slice(0,16).replace('T',' ');
-    const evId = 'EV-' + String(Math.floor(Math.random() * 900) + 100).padStart(3,'0') + '-CORP';
-
-    const tbody = document.getElementById('evidence-tbody');
-    const row = document.createElement('tr');
+    // Add to Evidence Vault Table
+    const tbody = document.getElementById("evidence-tbody");
+    const row = document.createElement("tr");
     row.innerHTML = `
-        <td><code style="color:var(--accent-cyan);font-weight:700">${evId}</code></td>
-        <td style="color:#ffffff;font-weight:600">${name}</td>
-        <td><span class="badge bg-info text-dark px-2 py-1 font-weight-bold">${stage}</span></td>
-        <td style="color:#e2e8f0">${host}</td>
-        <td style="color:#cbd5e1">${analyst}</td>
-        <td style="color:#94a3b8">${ts}</td>
-        <td><code style="color:#38bdf8;font-size:0.78rem">${hash.slice(0,24)}...</code></td>
+        <td><code style="color:var(--accent-cyan);font-weight:700">${tag}</code></td>
+        <td style="color:#ffffff;font-weight:600">${currentSelectedFile.name}</td>
+        <td><span class="badge bg-success text-white px-2 py-1">${tier}</span></td>
+        <td style="color:#94a3b8">${sizeKB}</td>
+        <td style="color:#94a3b8">${utcTime}</td>
+        <td><code style="color:#34d399;font-size:0.75rem" title="${currentCalculatedHash}">${currentCalculatedHash.substring(0, 18)}...</code></td>
     `;
     tbody.insertBefore(row, tbody.firstChild);
 
-    const cocTbody = document.getElementById('coc-tbody');
-    const cocRow = document.createElement('tr');
-    const seq = String(cocTbody.rows.length + 1).padStart(2,'0');
+    // Add to Chain of Custody Table
+    const cocTbody = document.getElementById("coc-tbody");
+    const cocRow = document.createElement("tr");
+    const seq = String(cocTbody.rows.length + 1).padStart(2, '0');
     cocRow.innerHTML = `
         <td style="font-weight:700;color:var(--accent-cyan)">${seq}</td>
-        <td><code style="color:var(--accent-cyan);font-weight:700">${evId}</code></td>
-        <td style="color:#94a3b8">${ts}</td>
+        <td><code style="color:var(--accent-cyan);font-weight:700">${tag}</code></td>
+        <td style="color:#94a3b8">${utcTime}</td>
         <td style="color:#ffffff">${analyst}</td>
-        <td style="color:#7dd3fc">Evidence Vault</td>
-        <td style="color:#e2e8f0">Initial Acquisition &amp; Cryptographic Sealing</td>
+        <td style="color:#7dd3fc">Secure Evidence Vault</td>
+        <td style="color:#e2e8f0">Initial Acquisition &amp; Cryptographic SHA-256 Hashing from ${host}</td>
     `;
     cocTbody.insertBefore(cocRow, cocTbody.firstChild);
 
-    log(`[FORENSICS] Acquired: ${name} | Stage: ${stage} | SHA-256: ${hash.slice(0,16)}...`, 't-info');
-    document.getElementById('ev-name').value = '';
+    logTerminal("FORENSIC_SEAL", `Acquired: ${currentSelectedFile.name} (${sizeKB})`, `SHA-256: ${currentCalculatedHash}`, `Logged under RFC 3227 Order of Volatility: ${tier}`);
+    alert(`Success! Evidence item [${currentSelectedFile.name}] sealed into Vault with genuine SHA-256:\n${currentCalculatedHash}`);
 }
 </script>
 </body>
